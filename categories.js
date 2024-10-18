@@ -15,7 +15,7 @@ const categoriesData = {
 };
 
 const compatibleCategories = {
-    "269": ["269", "492"],
+    "269": ["269", "492"]
     
     // Dodaj więcej powiązań między kategoriami według potrzeb
 };

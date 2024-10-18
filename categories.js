@@ -1,29 +1,5 @@
 const categoriesData = {
     categories: [
-        {
-            category_id: "301",
-            products: [
-                { products_id: "26774" },
-                { products_id: "26773" },
-                { products_id: "26772" },
-                { products_id: "26664" },
-                { products_id: "26382" },
-                { products_id: "26286" },
-                { products_id: "26018" },
-                { products_id: "25970" },
-                { products_id: "25873" },
-                { products_id: "25812" },
-                { products_id: "25638" },
-                { products_id: "25634" },
-                { products_id: "24150" },
-                { products_id: "24147" },
-                { products_id: "24143" },
-                { products_id: "24142" },
-                { products_id: "24140" },
-                { products_id: "24094" },
-                { products_id: "24028" },
-                { products_id: "23672" }
+                { category_id: "491", products: [{ products_id: "26972" }, { products_id: "26971" }, { products_id: "26966" }, { products_id: "26965" }, { products_id: "26958" }, { products_id: "26957" }, { products_id: "26956" }, { products_id: "26955" }, { products_id: "26954" }, { products_id: "26953" }, { products_id: "26952" }, { products_id: "26951" }, { products_id: "26950" }, { products_id: "26949" }, { products_id: "26948" }, { products_id: "26947" }, { products_id: "26946" }, { products_id: "26945" }, { products_id: "26944" }, { products_id: "26936" }] }, { category_id: "492", products: [{ products_id: "26943" }, { products_id: "26941" }, { products_id: "26940" }, { products_id: "26939" }, { products_id: "26938" }, { products_id: "26937" }, { products_id: "26934" }, { products_id: "26917" }, { products_id: "26911" }, { products_id: "26903" }, { products_id: "26880" }, { products_id: "26879" }, { products_id: "26874" }, { products_id: "26868" }, { products_id: "26867" }, { products_id: "26866" }, { products_id: "26865" }, { products_id: "26864" }, { products_id: "26860" }, { products_id: "26858" }] }, { category_id: "494", products: [{ products_id: "26970" }, { products_id: "26969" }, { products_id: "26968" }, { products_id: "26967" }, { products_id: "26963" }, { products_id: "26962" }, { products_id: "26961" }, { products_id: "26960" }, { products_id: "26959" }, { products_id: "26942" }, { products_id: "26921" }, { products_id: "26920" }, { products_id: "26919" }, { products_id: "26918" }, { products_id: "26913" }, { products_id: "26910" }, { products_id: "26902" }, { products_id: "26901" }, { products_id: "26899" }, { products_id: "26898" }] }, { category_id: "272", products: [{ products_id: "26937" }, { products_id: "26917" }, { products_id: "26868" }, { products_id: "26850" }, { products_id: "26823" }, { products_id: "26803" }, { products_id: "26716" }, { products_id: "26657" }, { products_id: "26655" }, { products_id: "26644" }, { products_id: "26643" }, { products_id: "26592" }, { products_id: "26591" }, { products_id: "26585" }, { products_id: "26561" }, { products_id: "26539" }, { products_id: "26496" }, { products_id: "26434" }, { products_id: "26414" }, { products_id: "26388" }] }, { category_id: "278", products: [{ products_id: "26941" }, { products_id: "26879" }, { products_id: "26874" }, { products_id: "26808" }, { products_id: "26787" }, { products_id: "26784" }, { products_id: "26714" }, { products_id: "26565" }, { products_id: "26436" }, { products_id: "26390" }, { products_id: "26369" }, { products_id: "26367" }, { products_id: "26365" }, { products_id: "26349" }, { products_id: "26348" }, { products_id: "26264" }, { products_id: "26263" }, { products_id: "26260" }, { products_id: "25687" }, { products_id: "25667" }] }, { category_id: "276", products: [{ products_id: "25397" }, { products_id: "25291" }, { products_id: "23372" }, { products_id: "21812" }, { products_id: "21636" }, { products_id: "21170" }, { products_id: "21168" }, { products_id: "20060" }, { products_id: "20053" }, { products_id: "19448" }, { products_id: "19143" }, { products_id: "19051" }, { products_id: "19034" }, { products_id: "18588" }, { products_id: "18539" }, { products_id: "18531" }, { products_id: "17286" }, { products_id: "17270" }, { products_id: "9750" }] }
             ]
-        }
-    ]
 };

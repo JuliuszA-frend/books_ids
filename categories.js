@@ -15,7 +15,7 @@ const categoriesData = {
 };
 
 const compatibleCategories = {
-    "269": ["269", "492", "303"], // Kategoria 269 jest kompatybilna z kategoriami 301, 302, 303
+    "269": ["269", "492"], // Kategoria 269 jest kompatybilna z kategoriami 301, 302, 303
     
     // Dodaj więcej powiązań między kategoriami według potrzeb
 };

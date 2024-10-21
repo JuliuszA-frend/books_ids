@@ -57,6 +57,6 @@ const categoryNames = {
     "272": "Magia i kosmos to Twoje światy? Dodaj je do koszyka!",
     "491": "Nowości na stronie dla najmłodszych, dzieci i młodzieży",
     "492": "Nie przegap najnowszych powieści z dostawy!",
-    "494": "Literatura Faktu – kilka nowych perełek na naszej stronie",
+    "494": "Literatura faktu – kilka nowych perełek na naszej stronie",
     // dodaj tutaj więcej kategorii
 };

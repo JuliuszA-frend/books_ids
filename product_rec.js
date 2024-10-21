@@ -133,8 +133,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
                 const categoryElement = document.createElement('div');
                 categoryElement.className = 'category';
 
-                const categoryName = document.createElement('h2');
-                categoryName.textContent = `${category.name_pl} - Może zainteresuje Cię jeszcze coś z tej kategorii`; // Łączymy oba teksty
+                // Użycie własnych nazw kategorii
+                const customCategoryName = categoryNames[category.category_id] || category.name_pl;
+                categoryName.textContent = `${customCategoryName}`;
                 categoryElement.appendChild(categoryName);
 
                 const productsContainer = document.createElement('div');

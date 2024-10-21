@@ -52,3 +52,11 @@ const compatibleCategories = {
     // Dodaj więcej powiązań między kategoriami według potrzeb
 };
 
+const categoryNames = {
+    269: "Lubisz powieści obyczajowe? Sprawdź inne tytuły z tej kategorii",
+    272: "Magia i kosmos to Twoje światy? Dodaj je do koszyka!",
+    491: "Nowości na stronie dla najmłodszych, dzieci i młodzieży",
+    492: "Nie przegap najnowszych powieści z dostawy!",
+    494: "Literatura faktu – kilkanowych perełek na naszej stronie",
+    // dodaj tutaj więcej kategorii
+};

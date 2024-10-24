@@ -1,4 +1,4 @@
-CSS Kart Produktowych
+/*CSS Kart Produktowych*/
 .carousel-container {
     display: flex;
     flex-direction: column;
@@ -25,10 +25,94 @@ CSS Kart Produktowych
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Cień */
     text-align: center; /* Wyśrodkowanie tekstu */
     scroll-snap-align: start; /* Przypięcie do początku pudełka */
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .product-image {
     width: 100%; /* Obraz wypełnia pudełko */
     height: auto; /* Utrzymuje proporcje */
     border-radius: 8px; /* Zaokrąglone rogi dla obrazu */
+}
+
+.custom-product-box-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.custom-product-box-content h3 {
+  margin:0 0 10px 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #09440d;
+  transition: all .3s;
+}
+
+.custom-product-box-content h3:hover {
+  color: #07350a;
+}
+
+.custom-container-price {
+  font-size: 1.65rem;
+  font-weight: 700;
+}
+
+.custom-product-box-content p {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+}
+
+
+/* CSS */
+.add-to-cart-button {
+  align-items: center;
+  background-color: #09440d;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  fill: #000;
+  font-size: 16px;
+  font-weight: 600;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: -.8px;
+  line-height: 24px;
+  min-width: 140px;
+  outline: 0;
+  padding: 0 17px;
+  text-align: center;
+  text-decoration: none;
+  transition: all .3s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.add-to-cart-button:focus {
+  color: #171e29;
+}
+
+.add-to-cart-button:hover {
+  background-color: #07350a;
+  border-color: #fff;
+  color: #fff;
+}
+
+.add-to-cart-button:active {
+  background-color: #3385ff;
+  border-color: #3385ff;
+  fill: #06f;
+}
+
+@media (min-width: 768px) {
+  .add-to-cart-button {
+    min-width: 170px;
+  }
 }

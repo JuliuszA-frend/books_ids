@@ -202,26 +202,37 @@ function createProductElement(product) {
   const productElement = document.createElement("div");
   productElement.className = "product-box";
 
+  // Link do strony produktu
   const productLink = document.createElement("a");
   productLink.href = product.url;
 
+  // Tworzenie obrazu produktu
   const productImage = document.createElement("img");
   productImage.src = product.main_image;
   productImage.alt = product.name_pl;
   productImage.className = "product-image";
 
-  const productName = document.createElement("h3");
-  productName.textContent = product.name_pl;
-
+  // Dodanie obrazu do linku, bez h3
   productLink.appendChild(productImage);
-  productLink.appendChild(productName);
   productElement.appendChild(productLink);
 
+  // Tworzenie sekcji na dodatkowe informacje
   const productContent = document.createElement("div");
   productContent.className = "custom-product-box-content";
 
+  // Przeniesienie nagłówka h3 z nazwą produktu i opakowanie go w link
+  const productNameLink = document.createElement("a");
+  productNameLink.href = product.url;
+
+  const productName = document.createElement("h3");
+  productName.textContent = product.name_pl;
+
+  productNameLink.appendChild(productName);
+  productContent.appendChild(productNameLink); // Dodanie linku z nazwą produktu do sekcji content
+
   const productPrice = document.createElement("p");
   productPrice.textContent = `Cena: ${product.promotions_price_brutto} PLN`;
+  productPrice.className = `custom-container-price`;
   productContent.appendChild(productPrice);
 
   const marketPrice = document.createElement("p");

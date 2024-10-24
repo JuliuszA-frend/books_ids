@@ -1,0 +1,34 @@
+CSS Kart Produktowych
+.carousel-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.category {
+    margin-bottom: 40px;
+}
+
+.products-carousel {
+    display: flex;
+    overflow-x: auto; /* Umożliwia przewijanie w poziomie */
+    scroll-snap-type: x mandatory; /* Efekt 'snap' przy przewijaniu */
+}
+
+.product-box {
+    flex: 0 0 auto; /* Sprawia, że elementy nie będą się rozciągać */
+    width: 200px; /* Szerokość pudełka */
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ddd; /* Ramka wokół pudełka */
+    border-radius: 8px; /* Zaokrąglone rogi */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Cień */
+    text-align: center; /* Wyśrodkowanie tekstu */
+    scroll-snap-align: start; /* Przypięcie do początku pudełka */
+}
+
+.product-image {
+    width: 100%; /* Obraz wypełnia pudełko */
+    height: auto; /* Utrzymuje proporcje */
+    border-radius: 8px; /* Zaokrąglone rogi dla obrazu */
+}

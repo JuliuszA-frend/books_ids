@@ -204,17 +204,25 @@ document.addEventListener("DOMContentLoaded", function (event) {
               productImage.className = "product-image"; // Klasa dla obrazu
               productLink.appendChild(productImage); // Dodajemy obraz do linku
 
-              // Nazwa produktu
+              // Dodajemy link do elementu produktu
+              productElement.appendChild(productLink);
+
+              // Tworzymy osobny div dla zawartości produktu
+              const productContent = document.createElement("div");
+              productContent.className = "custom-product-box-content"; // Klasa dla zawartości produktu
+
+              // Nazwa produktu (dodana do linku)
               const productName = document.createElement("h3");
               productName.textContent = product.name_pl;
               productLink.appendChild(productName); // Dodajemy nazwę do linku
 
-              productElement.appendChild(productLink); // Dodajemy link do elementu produktu
+              // Dodajemy link do elementu produktu
+              productElement.appendChild(productLink);
 
               // Cena produktu
               const productPrice = document.createElement("p");
               productPrice.textContent = `Cena: ${product.promotions_price_brutto} PLN`;
-              productElement.appendChild(productPrice);
+              productContent.appendChild(productPrice); // Dodajemy cenę do zawartości
 
               // Cena rynkowa
               const marketPrice = document.createElement("p");
@@ -224,18 +232,36 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
               marketPrice.textContent = "Cena rynkowa: "; // Tekst opisowy
               marketPrice.appendChild(marketPriceText); // Dodajemy przekreśloną cenę do paragrafu
-              productElement.appendChild(marketPrice); // Dodajemy wszystko do pudełka produktowego
+              productContent.appendChild(marketPrice); // Dodajemy wszystko do zawartości
 
               // Przyciski dodania do koszyka
-              const addToCartButton = document.createElement("button");
+              const addToCartButton = document.createElement("a");
               addToCartButton.id = "custom-add-to-cart";
               addToCartButton.setAttribute(
                 "data-product-id",
                 product.products_id
               );
               addToCartButton.setAttribute("data-item-count", "1");
-              addToCartButton.textContent = "Dodaj do koszyka";
               addToCartButton.className = "add-to-cart-button";
+
+              // Dodaj tekst "Dodaj do koszyka"
+              const buttonText = document.createElement("span");
+              buttonText.textContent = "Dodaj do koszyka";
+              addToCartButton.appendChild(buttonText);
+
+              // Dodaj ikonę torby zakupowej z MDI
+              const cartIcon = document.createElement("span");
+              cartIcon.className = "mdi mdi-shopping"; // Klasa dla ikony torby zakupowej z Material Design Icons
+              cartIcon.style.marginLeft = "10px"; // Odstęp między tekstem a ikoną
+
+              // Dodaj ikonę do przycisku
+              addToCartButton.appendChild(cartIcon);
+
+              // Dodaj przycisk do zawartości
+              productContent.appendChild(addToCartButton);
+
+              // Dodaj zawartość produktu do głównego elementu produktu
+              productElement.appendChild(productContent);
 
               // Obsługa dodawania do koszyka (twoja funkcja)
               addToCartButton.addEventListener("click", function () {

@@ -147,211 +147,173 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 
-  // Funkcja wyświetlania kategorii i produktów
-  function displayCategoriesAndProducts(data) {
-    const container = document.createElement("div");
-    container.className = "carousel-container"; // Kontener dla karuzeli
+let allDisplayedProducts = new Set();
 
-    if (data.categories && data.categories.length > 0) {
-      const displayedProducts = new Set(); // Zbiór wyświetlonych produktów, aby uniknąć duplikatów
+function displayCategoriesAndProducts(data) {
+  const container = document.createElement("div");
+  container.className = "carousel-container";
 
-      data.categories.forEach((category) => {
-        const categoryElement = document.createElement("div");
-        categoryElement.className = "category";
+  if (data.categories && data.categories.length > 0) {
+    data.categories.forEach((category) => {
+      const categoryElement = document.createElement("div");
+      categoryElement.className = "category";
+      const categoryName = document.createElement("h2");
+      const customCategoryName = categoryNames[category.category_id];
 
-        const categoryName = document.createElement("h2");
-        // Sprawdzamy, czy kategoria ma przypisany tytuł w categoryNames
-        const customCategoryName = categoryNames[category.category_id];
+      if (customCategoryName) {
+        categoryName.textContent = customCategoryName;
+      } else {
+        categoryName.textContent = `${category.name_pl} - Może zainteresuje Cię jeszcze coś z tej kategorii`;
+      }
 
-        if (customCategoryName) {
-          categoryName.textContent = customCategoryName; // Ustawiamy niestandardowy tytuł
+      categoryElement.appendChild(categoryName);
+
+      const productsContainer = document.createElement("div");
+      productsContainer.className = "products-carousel";
+
+      if (category.products && category.products.length > 0) {
+        console.log(`Znaleziono ${category.products.length} produktów w kategorii ${category.name_pl}.`);
+        const randomProducts = getRandomProducts(category.products, 10);
+        console.log(`Wylosowano ${randomProducts.length} produktów z kategorii ${category.name_pl}.`);
+
+        randomProducts.forEach((product) => {
+          if (product.products_id !== productId && !allDisplayedProducts.has(product.products_id)) {
+           console.log(`Wyświetlam produkt: ${product.products_id} - ${product.name_pl}`);
+             const productElement = createProductElement(product);
+            productsContainer.appendChild(productElement);
+            allDisplayedProducts.add(product.products_id);
+          }
+        });
+      } else {
+        console.log(`Brak produktów w kategorii ${category.name_pl}.`);
+      }
+
+      categoryElement.appendChild(productsContainer);
+      container.appendChild(categoryElement);
+    });
+  } else {
+    console.log("Brak kategorii w danych.");
+  }
+
+  document.getElementById("content").appendChild(container);
+}
+
+function createProductElement(product) {
+  const productElement = document.createElement("div");
+  productElement.className = "product-box";
+
+  const productLink = document.createElement("a");
+  productLink.href = product.url;
+
+  const productImage = document.createElement("img");
+  productImage.src = product.main_image;
+  productImage.alt = product.name_pl;
+  productImage.className = "product-image";
+
+  const productName = document.createElement("h3");
+  productName.textContent = product.name_pl;
+
+  productLink.appendChild(productImage);
+  productLink.appendChild(productName);
+  productElement.appendChild(productLink);
+
+  const productContent = document.createElement("div");
+  productContent.className = "custom-product-box-content";
+
+  const productPrice = document.createElement("p");
+  productPrice.textContent = `Cena: ${product.promotions_price_brutto} PLN`;
+  productContent.appendChild(productPrice);
+
+  const marketPrice = document.createElement("p");
+  const marketPriceText = document.createElement("span");
+  marketPriceText.textContent = `${product.gross_price} PLN`;
+  marketPriceText.style.textDecoration = "line-through";
+  marketPrice.textContent = "Cena rynkowa: ";
+  marketPrice.appendChild(marketPriceText);
+  productContent.appendChild(marketPrice);
+
+  const addToCartButton = createAddToCartButton(product);
+
+  productContent.appendChild(addToCartButton);
+  productElement.appendChild(productContent);
+
+  return productElement;
+}
+
+function createAddToCartButton(product) {
+  const addToCartButton = document.createElement("a");
+  addToCartButton.id = "custom-add-to-cart";
+  addToCartButton.setAttribute("data-product-id", product.products_id);
+  addToCartButton.setAttribute("data-item-count", "1");
+  addToCartButton.className = "add-to-cart-button";
+
+  const buttonText = document.createElement("span");
+  buttonText.textContent = "Dodaj do koszyka";
+  addToCartButton.appendChild(buttonText);
+
+  const cartIcon = document.createElement("span");
+  cartIcon.className = "mdi mdi-shopping";
+  cartIcon.style.marginLeft = "10px";
+  addToCartButton.appendChild(cartIcon);
+
+  addToCartButton.addEventListener("click", function () {
+    const pid = this.getAttribute("data-product-id");
+    const ct = this.getAttribute("data-item-count");
+    const item = ct > 0 ? ct : 1;
+    const pict = "fb";
+    console.log(`Dodawanie produktu ${pid} do koszyka. Ilość: ${item}`);
+
+    new Request({
+      method: "post",
+      url: "/ajax/pinfo/addcart/",
+      data: {
+        pid: pid,
+        item: item,
+        pict: pict,
+        checkOptions: 1,
+        type: 0,
+        ct: ct,
+      },
+      onComplete: function (data) {
+        if (!data) {
+          console.log(`Nie znaleziono danych dla produktu ${pid}. Przekierowanie.`);
+          window.location.href = "/p/0/" + pid + "/.html";
         } else {
-          categoryName.textContent = `${category.name_pl} - Może zainteresuje Cię jeszcze coś z tej kategorii`; // Domyślny tytuł
-        }
-
-        categoryElement.appendChild(categoryName);
-        const productsContainer = document.createElement("div");
-        productsContainer.className = "products-carousel"; // Kontener dla karuzeli produktów
-
-        if (category.products && category.products.length > 0) {
-          console.log(
-            `Znaleziono ${category.products.length} produktów w kategorii ${category.name_pl}.`
-          );
-
-          // Pobranie 10 losowych produktów z tej kategorii
-          const randomProducts = getRandomProducts(category.products, 10);
-          console.log(
-            `Wylosowano ${randomProducts.length} produktów z kategorii ${category.name_pl}.`
-          );
-
-          randomProducts.forEach((product) => {
-            // Sprawdzamy, czy produkt jest głównym produktem, dla którego generujemy rekomendacje
-            if (
-              product.products_id !== productId &&
-              !displayedProducts.has(product.products_id)
-            ) {
-              const productElement = document.createElement("div");
-              productElement.className = "product-box"; // Klasa dla pudełka produktowego
-
-              // Tworzenie linku do produktu
-              const productLink = document.createElement("a");
-              productLink.href = product.url; // Ustawiamy adres URL produktu
-
-              // Zdjęcie produktu
-              const productImage = document.createElement("img");
-              productImage.src = product.main_image;
-              productImage.alt = product.name_pl;
-              productImage.className = "product-image"; // Klasa dla obrazu
-              productLink.appendChild(productImage); // Dodajemy obraz do linku
-
-              // Dodajemy link do elementu produktu
-              productElement.appendChild(productLink);
-
-              // Tworzymy osobny div dla zawartości produktu
-              const productContent = document.createElement("div");
-              productContent.className = "custom-product-box-content"; // Klasa dla zawartości produktu
-
-              // Nazwa produktu (dodana do linku)
-              const productName = document.createElement("h3");
-              productName.textContent = product.name_pl;
-              productLink.appendChild(productName); // Dodajemy nazwę do linku
-
-              // Dodajemy link do elementu produktu
-              productElement.appendChild(productLink);
-
-              // Cena produktu
-              const productPrice = document.createElement("p");
-              productPrice.textContent = `Cena: ${product.promotions_price_brutto} PLN`;
-              productContent.appendChild(productPrice); // Dodajemy cenę do zawartości
-
-              // Cena rynkowa
-              const marketPrice = document.createElement("p");
-              const marketPriceText = document.createElement("span"); // Tworzymy span dla ceny rynkowej
-              marketPriceText.textContent = `${product.gross_price} PLN`; // Ustawiamy tekst
-              marketPriceText.style.textDecoration = "line-through"; // Przekreślenie ceny
-
-              marketPrice.textContent = "Cena rynkowa: "; // Tekst opisowy
-              marketPrice.appendChild(marketPriceText); // Dodajemy przekreśloną cenę do paragrafu
-              productContent.appendChild(marketPrice); // Dodajemy wszystko do zawartości
-
-              // Przyciski dodania do koszyka
-              const addToCartButton = document.createElement("a");
-              addToCartButton.id = "custom-add-to-cart";
-              addToCartButton.setAttribute(
-                "data-product-id",
-                product.products_id
-              );
-              addToCartButton.setAttribute("data-item-count", "1");
-              addToCartButton.className = "add-to-cart-button";
-
-              // Dodaj tekst "Dodaj do koszyka"
-              const buttonText = document.createElement("span");
-              buttonText.textContent = "Dodaj do koszyka";
-              addToCartButton.appendChild(buttonText);
-
-              // Dodaj ikonę torby zakupowej z MDI
-              const cartIcon = document.createElement("span");
-              cartIcon.className = "mdi mdi-shopping"; // Klasa dla ikony torby zakupowej z Material Design Icons
-              cartIcon.style.marginLeft = "10px"; // Odstęp między tekstem a ikoną
-
-              // Dodaj ikonę do przycisku
-              addToCartButton.appendChild(cartIcon);
-
-              // Dodaj przycisk do zawartości
-              productContent.appendChild(addToCartButton);
-
-              // Dodaj zawartość produktu do głównego elementu produktu
-              productElement.appendChild(productContent);
-
-              // Obsługa dodawania do koszyka (twoja funkcja)
-              addToCartButton.addEventListener("click", function () {
-                const pid = this.getAttribute("data-product-id");
-                const ct = this.getAttribute("data-item-count");
-                const item = ct > 0 ? ct : 1;
-                const pict = "fb";
-
-                console.log(
-                  `Dodawanie produktu ${pid} do koszyka. Ilość: ${item}`
-                );
-
-                new Request({
-                  method: "post",
-                  url: "/ajax/pinfo/addcart/",
-                  data: {
-                    pid: pid,
-                    item: item,
-                    pict: pict,
-                    checkOptions: 1,
-                    type: 0,
-                    ct: ct,
-                  },
-                  onComplete: function (data) {
-                    if (!data) {
-                      console.log(
-                        `Nie znaleziono danych dla produktu ${pid}. Przekierowanie.`
-                      );
-                      window.location.href = "/p/0/" + pid + "/.html";
-                    } else {
-                      const d = data.split("~");
-                      console.log(
-                        `Odpowiedź z serwera po dodaniu do koszyka: ${data}`
-                      );
-                      switch (d[0]) {
-                        case "1":
-                        case "2":
-                          const rc_w = new rc_windows({
-                            id: "rc_window_opt",
-                            container: document.body,
-                            useOverlay: true,
-                            width: 665,
-                            height: 300,
-                            title: def.index.window_opt_title,
-                            contentHTML: d[1],
-                          });
-                          document.getElementById(
-                            "rc_window_opt_body"
-                          ).innerHTML = d[1];
-                          break;
-                        default:
-                          items_cart(
-                            "products_quantity" + ct + "_" + pid,
-                            0,
-                            ct,
-                            pict
-                          );
-                          break;
-                      }
-                    }
-                  },
-                }).send();
+          const d = data.split("~");
+          console.log(`Odpowiedź z serwera po dodaniu do koszyka: ${data}`);
+          switch (d[0]) {
+            case "1":
+            case "2":
+              const rc_w = new rc_windows({
+                id: "rc_window_opt",
+                container: document.body,
+                useOverlay: true,
+                width: 665,
+                height: 300,
+                title: def.index.window_opt_title,
+                contentHTML: d[1],
               });
-
-              productElement.appendChild(addToCartButton); // Dodajemy przycisk do pudełka produktowego
-              displayedProducts.add(product.products_id); // Dodajemy ID produktu do zbioru
-              productsContainer.appendChild(productElement); // Dodajemy element produktu do kontenera
-            }
-          });
-        } else {
-          console.log(`Brak produktów w kategorii ${category.name_pl}.`);
+              document.getElementById("rc_window_opt_body").innerHTML = d[1];
+              break;
+            default:
+              items_cart("products_quantity" + ct + "_" + pid, 0, ct, pict);
+              break;
+          }
         }
+      },
+    }).send();
+  });
 
-        categoryElement.appendChild(productsContainer); // Dodajemy kontener produktów do kategorii
-        container.appendChild(categoryElement); // Dodajemy kategorię do kontenera
-      });
-    } else {
-      console.log("Brak kategorii w danych.");
-    }
+  return addToCartButton;
+}
 
-    document.getElementById("content").appendChild(container);
+function getRandomProducts(products, count) {
+  const shuffled = products.slice();
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
+  return shuffled.slice(0, count);
+}
 
-  // Funkcja do losowania produktów
-  function getRandomProducts(products, count) {
-    const shuffled = products.slice(); // Kopiujemy tablicę produktów
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; // Przechodzimy przez tablicę, losując elementy
-    }
-    return shuffled.slice(0, count); // Zwracamy wylosowane produkty
-  }
 });

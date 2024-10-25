@@ -131,7 +131,7 @@ const categoryNames = {
     "312": "",
     "313": "",
     "470": "",
-    // DZIECIĘCA I MŁODZIEŻOWA
+    // KSIĄŻKA NIEBELETRYSTYCZNA
 
 
 

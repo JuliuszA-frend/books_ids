@@ -173,7 +173,7 @@ function displayCategoriesAndProducts(data) {
 
       if (category.products && category.products.length > 0) {
         console.log(`Znaleziono ${category.products.length} produktów w kategorii ${category.name_pl}.`);
-        const randomProducts = getRandomProducts(category.products, 10);
+        const randomProducts = getRandomProducts(category.products, 6);
         console.log(`Wylosowano ${randomProducts.length} produktów z kategorii ${category.name_pl}.`);
 
         randomProducts.forEach((product) => {

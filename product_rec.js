@@ -172,9 +172,22 @@ function displayCategoriesAndProducts(data) {
       productsContainer.className = "products-carousel";
 
       if (category.products && category.products.length > 0) {
-        console.log(`Znaleziono ${category.products.length} produktów w kategorii ${category.name_pl}.`);
-        const randomProducts = getRandomProducts(category.products, 6);
-        console.log(`Wylosowano ${randomProducts.length} produktów z kategorii ${category.name_pl}.`);
+        category.products.forEach((product) => {
+          console.log(`Produkt ID: ${product.products_id}, Nazwa: ${product.name_pl}, Ilość: ${product.quantity}`);
+        });
+
+        // Filtrujemy produkty, aby uwzględnić tylko te z quantity > 0
+        const availableProducts = category.products.filter(
+          (product) => product.quantity > 0
+        );
+
+        console.log(`Znaleziono ${availableProducts.length} produktów dostępnych w kategorii ${category.name_pl}.`);
+
+        // Wypisujemy do loga szczegóły każdego produktu dostępnego (z quantity > 0)
+        availableProducts.forEach((product) => {
+          console.log(`Produkt ID: ${product.products_id}, Nazwa: ${product.name_pl}, Ilość: ${product.quantity}`);
+        });
+        const randomProducts = getRandomProducts(availableProducts, 8);
 
         randomProducts.forEach((product) => {
           if (product.products_id !== productId && !allDisplayedProducts.has(product.products_id)) {

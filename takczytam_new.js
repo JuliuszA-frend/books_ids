@@ -1,10 +1,8 @@
 
+  window.addEventListener("DOMContentLoaded", function () {
     var categoriesTree = document.getElementById("categories-tree");
-    if (categoriesTree) {
-        categoriesTree.style.display = "block";
-    } else {
-        console.warn("Element 'categories-tree' nie został znaleziony.");
-    }
+    categoriesTree.style.display = "block";
+  });
 
 
   window.addEventListener("load", function () {

@@ -476,38 +476,51 @@
     pinfoContainerItem.style.display = "none";
   }
 
-  var newFilterBox = document.createElement("div");
-  newFilterBox.className = "filter-box";
-  var newFilterTitle = document.createElement("h5");
-  newFilterTitle.className = "filter-title";
-  newFilterTitle.style.cssText =
-    "font-size:2rem;color:#fff;background-color:#101828;padding: .7rem;";
-  newFilterTitle.setAttribute("data-toggle", "collapse");
-  newFilterTitle.setAttribute("data-target", "#newFilterContent");
-  newFilterTitle.innerHTML =
-    "Wyłącz produkty niedostępne oraz ostatnie egzemplarze <a class='filter-collapse' href='javascript:;' style='font-size:3.5rem;color:#fff;'></a>";
-  var newFilterContent = document.createElement("div");
-  newFilterContent.className = "filter-content collapse fade";
-  newFilterContent.id = "newFilterContent";
-  var newCheckbox = document.createElement("input");
-  newCheckbox.type = "checkbox";
-  newCheckbox.id = "newCheckbox";
-  newCheckbox.name = "newCheckbox";
-  newCheckbox.value = "newCheckbox";
-  var newLabel = document.createElement("label");
-  newLabel.setAttribute("for", "newCheckbox");
-  newLabel.innerHTML =
-    "Pokaż produkty dostępne od ręki w magazynie sklepu internetowego";
-  newLabel.style.cssText = "font-size:1.55rem;color:#101828;";
-  newFilterContent.appendChild(newCheckbox);
-  newFilterContent.appendChild(newLabel);
-  newFilterBox.appendChild(newFilterTitle);
-  newFilterBox.appendChild(newFilterContent);
-  var listingSorting = document.querySelector(
-    ".container-fluid.listing-sorting"
-  );
-  var nextContainer = listingSorting.nextElementSibling;
-  listingSorting.parentNode.insertBefore(newFilterBox, nextContainer);
+  var listingSorting = document.querySelector(".container-fluid.listing-sorting");
+
+  // Sprawdź, czy element istnieje
+  if (listingSorting) {
+    var newFilterBox = document.createElement("div");
+    newFilterBox.className = "filter-box";
+
+    var newFilterTitle = document.createElement("h5");
+    newFilterTitle.className = "filter-title";
+    newFilterTitle.style.cssText =
+      "font-size:2rem;color:#fff;background-color:#101828;padding: .7rem;";
+    newFilterTitle.setAttribute("data-toggle", "collapse");
+    newFilterTitle.setAttribute("data-target", "#newFilterContent");
+    newFilterTitle.innerHTML =
+      "Wyłącz produkty niedostępne oraz ostatnie egzemplarze <a class='filter-collapse' href='javascript:;' style='font-size:3.5rem;color:#fff;'></a>";
+
+    var newFilterContent = document.createElement("div");
+    newFilterContent.className = "filter-content collapse fade";
+    newFilterContent.id = "newFilterContent";
+
+    var newCheckbox = document.createElement("input");
+    newCheckbox.type = "checkbox";
+    newCheckbox.id = "newCheckbox";
+    newCheckbox.name = "newCheckbox";
+    newCheckbox.value = "newCheckbox";
+
+    var newLabel = document.createElement("label");
+    newLabel.setAttribute("for", "newCheckbox");
+    newLabel.innerHTML =
+      "Pokaż produkty dostępne od ręki w magazynie sklepu internetowego";
+    newLabel.style.cssText = "font-size:1.55rem;color:#101828;";
+
+    newFilterContent.appendChild(newCheckbox);
+    newFilterContent.appendChild(newLabel);
+
+    newFilterBox.appendChild(newFilterTitle);
+    newFilterBox.appendChild(newFilterContent);
+
+    var nextContainer = listingSorting.nextElementSibling;
+    listingSorting.parentNode.insertBefore(newFilterBox, nextContainer);
+  } else {
+    console.info(
+      "Element '.container-fluid.listing-sorting' nie istnieje na tej stronie."
+    );
+  }
 
 
 

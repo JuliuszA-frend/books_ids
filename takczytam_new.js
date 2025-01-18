@@ -525,6 +525,8 @@
 
 
   var currentURL = window.location.href;
+
+  // Usuń stan checkboxa dla określonych stron
   if (
     currentURL.includes("https://takczytam.com/q/") ||
     currentURL === "https://takczytam.com/ostatnie-egzemplarze" ||
@@ -532,25 +534,37 @@
   ) {
     localStorage.removeItem("checkboxState");
   }
+  
+  // Znajdź checkbox w DOM
   var checkbox = document.getElementById("newCheckbox");
   var productDivs = document.querySelectorAll(
     ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
   );
-  var isChecked = localStorage.getItem("checkboxState") === "true";
-  var unavailableProducts = document.querySelectorAll(".unavailable-text");
-  var lastPieceProducts = document.querySelectorAll(".last-piece-text");
-  if (isChecked) {
-    checkbox.checked = !0;
-    hideUnavailableProducts();
-  }
-  checkbox.addEventListener("change", function () {
-    localStorage.setItem("checkboxState", checkbox.checked);
-    if (checkbox.checked) {
-      hideUnavailableProducts();
-    } else {
-      showAllProducts();
+  
+  // Jeśli checkbox istnieje, wykonaj odpowiednie operacje
+  if (checkbox) {
+    var isChecked = localStorage.getItem("checkboxState") === "true";
+    var unavailableProducts = document.querySelectorAll(".unavailable-text");
+    var lastPieceProducts = document.querySelectorAll(".last-piece-text");
+  
+    if (isChecked) {
+      checkbox.checked = true; // Zaznacz checkbox
+      hideUnavailableProducts(); // Ukryj niedostępne produkty
     }
-  });
+  
+    // Obsługa zdarzenia zmiany stanu checkboxa
+    checkbox.addEventListener("change", function () {
+      localStorage.setItem("checkboxState", checkbox.checked);
+      if (checkbox.checked) {
+        hideUnavailableProducts();
+      } else {
+        showAllProducts();
+      }
+    });
+  } else {
+    console.info("Checkbox o ID 'newCheckbox' nie istnieje na tej stronie.");
+  }
+  
   function hideUnavailableProducts() {
     unavailableProducts.forEach(function (unavailableProduct) {
       var productDiv = unavailableProduct.closest(

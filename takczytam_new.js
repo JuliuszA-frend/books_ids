@@ -1697,7 +1697,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
   
   document.addEventListener("DOMContentLoaded", function (event) {
     const productElement = document.getElementById("rc_pid");
-    let productId;
+    
     if (productElement) {
         // Kod manipulujący produktem
         console.log("Element znaleziony:", productElement);
@@ -1708,7 +1708,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
     } else {
         console.error("Element o id 'rc_pid' nie został znaleziony.");
     }
-    console.log(`Znaleziono ID produktu: ${productId}`);
+    
     const requestBody = JSON.stringify({
       products: [{ products_id: productId }],
     });

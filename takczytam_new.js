@@ -534,62 +534,69 @@
   ) {
     localStorage.removeItem("checkboxState");
   }
+  
   var checkbox = document.getElementById("newCheckbox");
-  var productDivs = document.querySelectorAll(
-    ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-  );
-  var isChecked = localStorage.getItem("checkboxState") === "true";
-  var unavailableProducts = document.querySelectorAll(".unavailable-text");
-  var lastPieceProducts = document.querySelectorAll(".last-piece-text");
-  if (isChecked) {
-    checkbox.checked = !0;
-    hideUnavailableProducts();
-  }
-  checkbox.addEventListener("change", function () {
-    localStorage.setItem("checkboxState", checkbox.checked);
-    if (checkbox.checked) {
+  if (checkbox) { // Sprawdzenie, czy checkbox istnieje
+    var productDivs = document.querySelectorAll(
+      ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+    );
+    var isChecked = localStorage.getItem("checkboxState") === "true";
+    var unavailableProducts = document.querySelectorAll(".unavailable-text");
+    var lastPieceProducts = document.querySelectorAll(".last-piece-text");
+  
+    if (isChecked) {
+      checkbox.checked = true;
       hideUnavailableProducts();
-    } else {
-      showAllProducts();
     }
-  });
-  function hideUnavailableProducts() {
-    unavailableProducts.forEach(function (unavailableProduct) {
-      var productDiv = unavailableProduct.closest(
-        ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-      );
-      if (productDiv) {
-        productDiv.style.display = "none";
+  
+    checkbox.addEventListener("change", function () {
+      localStorage.setItem("checkboxState", checkbox.checked);
+      if (checkbox.checked) {
+        hideUnavailableProducts();
+      } else {
+        showAllProducts();
       }
     });
-    lastPieceProducts.forEach(function (lastPieceProduct) {
-      var productDiv = lastPieceProduct.closest(
-        ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-      );
-      if (productDiv) {
-        productDiv.style.display = "none";
-      }
-    });
+  
+    function hideUnavailableProducts() {
+      unavailableProducts.forEach(function (unavailableProduct) {
+        var productDiv = unavailableProduct.closest(
+          ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+        );
+        if (productDiv) {
+          productDiv.style.display = "none";
+        }
+      });
+      lastPieceProducts.forEach(function (lastPieceProduct) {
+        var productDiv = lastPieceProduct.closest(
+          ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+        );
+        if (productDiv) {
+          productDiv.style.display = "none";
+        }
+      });
+    }
+  
+    function showAllProducts() {
+      unavailableProducts.forEach(function (unavailableProduct) {
+        var productDiv = unavailableProduct.closest(
+          ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+        );
+        if (productDiv && productDiv.style.display === "none") {
+          productDiv.style.display = "block";
+        }
+      });
+      lastPieceProducts.forEach(function (lastPieceProduct) {
+        var productDiv = lastPieceProduct.closest(
+          ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+        );
+        if (productDiv && productDiv.style.display === "none") {
+          productDiv.style.display = "block";
+        }
+      });
+    }
   }
-  function showAllProducts() {
-    unavailableProducts.forEach(function (unavailableProduct) {
-      var productDiv = unavailableProduct.closest(
-        ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-      );
-      if (productDiv && productDiv.style.display === "none") {
-        productDiv.style.display = "block";
-      }
-    });
-    lastPieceProducts.forEach(function (lastPieceProduct) {
-      var productDiv = lastPieceProduct.closest(
-        ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-      );
-      if (productDiv && productDiv.style.display === "none") {
-        productDiv.style.display = "block";
-      }
-    });
-  }
-
+  
 
   var spanElement = document.querySelector("#invoice_div label.rc-rc span");
   if (spanElement) {

@@ -527,75 +527,92 @@
 
 
   var currentURL = window.location.href;
-  if (
-    currentURL.includes("https://takczytam.com/q/") ||
-    currentURL === "https://takczytam.com/ostatnie-egzemplarze" ||
-    currentURL === "https://takczytam.com/produkty-niedostepne"
-  ) {
-    localStorage.removeItem("checkboxState");
+
+// Usuwanie stanu checkboxa dla określonych adresów URL
+if (
+  currentURL.includes("https://takczytam.com/q/") ||
+  currentURL === "https://takczytam.com/ostatnie-egzemplarze" ||
+  currentURL === "https://takczytam.com/produkty-niedostepne"
+) {
+  localStorage.removeItem("checkboxState");
+  console.log("Checkbox state cleared for specific URLs.");
+}
+
+var checkbox = document.getElementById("newCheckbox");
+if (checkbox) {
+  console.log("Checkbox element found:", checkbox);
+
+  var productDivs = document.querySelectorAll(
+    ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+  );
+  var isChecked = localStorage.getItem("checkboxState") === "true";
+  console.log("Initial checkbox state from localStorage:", isChecked);
+
+  var unavailableProducts = document.querySelectorAll(".unavailable-text");
+  var lastPieceProducts = document.querySelectorAll(".last-piece-text");
+
+  if (isChecked) {
+    checkbox.checked = true;
+    console.log("Checkbox is checked, hiding unavailable products.");
+    hideUnavailableProducts();
   }
-  
-  var checkbox = document.getElementById("newCheckbox");
-  if (checkbox) { // Sprawdzenie, czy checkbox istnieje
-    var productDivs = document.querySelectorAll(
-      ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-    );
-    var isChecked = localStorage.getItem("checkboxState") === "true";
-    var unavailableProducts = document.querySelectorAll(".unavailable-text");
-    var lastPieceProducts = document.querySelectorAll(".last-piece-text");
-  
-    if (isChecked) {
-      checkbox.checked = true;
+
+  checkbox.addEventListener("change", function () {
+    console.log("Checkbox clicked, new state:", checkbox.checked);
+    localStorage.setItem("checkboxState", checkbox.checked);
+    if (checkbox.checked) {
       hideUnavailableProducts();
+    } else {
+      showAllProducts();
     }
-  
-    checkbox.addEventListener("change", function () {
-      localStorage.setItem("checkboxState", checkbox.checked);
-      if (checkbox.checked) {
-        hideUnavailableProducts();
-      } else {
-        showAllProducts();
+  });
+
+  function hideUnavailableProducts() {
+    console.log("Hiding unavailable products.");
+    unavailableProducts.forEach(function (unavailableProduct) {
+      var productDiv = unavailableProduct.closest(
+        ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+      );
+      if (productDiv) {
+        productDiv.style.display = "none";
+        console.log("Product hidden:", productDiv);
       }
     });
-  
-    function hideUnavailableProducts() {
-      unavailableProducts.forEach(function (unavailableProduct) {
-        var productDiv = unavailableProduct.closest(
-          ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-        );
-        if (productDiv) {
-          productDiv.style.display = "none";
-        }
-      });
-      lastPieceProducts.forEach(function (lastPieceProduct) {
-        var productDiv = lastPieceProduct.closest(
-          ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-        );
-        if (productDiv) {
-          productDiv.style.display = "none";
-        }
-      });
-    }
-  
-    function showAllProducts() {
-      unavailableProducts.forEach(function (unavailableProduct) {
-        var productDiv = unavailableProduct.closest(
-          ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-        );
-        if (productDiv && productDiv.style.display === "none") {
-          productDiv.style.display = "block";
-        }
-      });
-      lastPieceProducts.forEach(function (lastPieceProduct) {
-        var productDiv = lastPieceProduct.closest(
-          ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-        );
-        if (productDiv && productDiv.style.display === "none") {
-          productDiv.style.display = "block";
-        }
-      });
-    }
+    lastPieceProducts.forEach(function (lastPieceProduct) {
+      var productDiv = lastPieceProduct.closest(
+        ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+      );
+      if (productDiv) {
+        productDiv.style.display = "none";
+        console.log("Last piece product hidden:", productDiv);
+      }
+    });
   }
+
+  function showAllProducts() {
+    console.log("Showing all products.");
+    unavailableProducts.forEach(function (unavailableProduct) {
+      var productDiv = unavailableProduct.closest(
+        ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+      );
+      if (productDiv) {
+        productDiv.style.display = "block";
+        console.log("Product shown:", productDiv);
+      }
+    });
+    lastPieceProducts.forEach(function (lastPieceProduct) {
+      var productDiv = lastPieceProduct.closest(
+        ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+      );
+      if (productDiv) {
+        productDiv.style.display = "block";
+        console.log("Last piece product shown:", productDiv);
+      }
+    });
+  }
+} else {
+  console.warn("Checkbox element not found. Skipping initialization.");
+}
   
 
   var spanElement = document.querySelector("#invoice_div label.rc-rc span");

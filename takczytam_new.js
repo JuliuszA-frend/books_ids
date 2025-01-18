@@ -1697,6 +1697,13 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
   
   document.addEventListener("DOMContentLoaded", function (event) {
     const productElement = document.getElementById("rc_pid");
+
+    if (productElement) {
+        // Kod manipulujący produktem
+        console.log("Element znaleziony:", productElement);
+    } else {
+        console.error("Element o id 'rc_pid' nie został znaleziony.");
+    }
     const productId = productElement.getAttribute("data-id");
     console.log(`Znaleziono ID produktu: ${productId}`);
     const requestBody = JSON.stringify({

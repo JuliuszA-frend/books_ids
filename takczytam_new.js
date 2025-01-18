@@ -1701,10 +1701,13 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
     if (productElement) {
         // Kod manipulujący produktem
         console.log("Element znaleziony:", productElement);
+        
+        // Teraz możesz bezpiecznie pobrać atrybut
+        const productId = productElement.getAttribute("data-id");
+        console.log("Product ID:", productId);
     } else {
         console.error("Element o id 'rc_pid' nie został znaleziony.");
     }
-    const productId = productElement.getAttribute("data-id");
     console.log(`Znaleziono ID produktu: ${productId}`);
     const requestBody = JSON.stringify({
       products: [{ products_id: productId }],

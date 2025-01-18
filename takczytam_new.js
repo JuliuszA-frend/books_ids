@@ -610,10 +610,17 @@
 
 
   var cenaElement1 = document.querySelector('[itemprop="price"]');
-  var cenaElement2 = document.querySelector(".pinfo-price__omnibus strong");
+var cenaElement2 = document.querySelector(".pinfo-price__omnibus strong");
+
+if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
   var cenaValue = cenaElement1.getAttribute("content");
-  var formattedCena = parseFloat(cenaValue).toFixed(2) + " PLN";
-  cenaElement2.innerText = formattedCena;
+  if (cenaValue) { // Sprawdzenie, czy cenaValue istnieje
+    var formattedCena = parseFloat(cenaValue).toFixed(2) + " PLN";
+    if (cenaElement2) { // Sprawdzenie, czy cenaElement2 istnieje
+      cenaElement2.innerText = formattedCena;
+    }
+  }
+}
 
 
   

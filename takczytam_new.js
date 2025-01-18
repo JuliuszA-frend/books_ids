@@ -424,12 +424,13 @@ if (divElement) { // Sprawdzamy, czy element istnieje
 
   
   var informDivs = document.querySelectorAll(".view_stock_info_text_not");
-  informDivs.forEach(function (informDiv) {
-    if (
-      informDiv &&
-      informDiv.textContent.trim() === "Poinformuj mnie o ponownej dostępności"
-    ) {
-      var productInside = informDiv.closest(".product-inside");
+informDivs.forEach(function (informDiv) {
+  if (
+    informDiv &&
+    informDiv.textContent.trim() === "Poinformuj mnie o ponownej dostępności"
+  ) {
+    var productInside = informDiv.closest(".product-inside");
+    if (productInside) { // Sprawdzamy, czy znaleziono element .product-inside
       var priceElement = productInside.querySelector(".view_price_global");
       var hasPrice = priceElement && priceElement.querySelector(".view_price");
       if (!hasPrice) {
@@ -475,8 +476,11 @@ if (divElement) { // Sprawdzamy, czy element istnieje
             .appendChild(lastPieceText);
         }
       }
+    } else {
+      console.log("Element .product-inside nie został znaleziony.");
     }
-  });
+  }
+});
 
 
   var pinfoContainerItem = document.querySelector(".view_price_shipping");

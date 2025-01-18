@@ -1697,7 +1697,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
   
   document.addEventListener("DOMContentLoaded", function (event) {
     const productElement = document.getElementById("rc_pid");
-
+    let productId;
     if (productElement) {
         // Kod manipulujący produktem
         console.log("Element znaleziony:", productElement);

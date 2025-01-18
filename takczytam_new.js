@@ -7,10 +7,14 @@
     }
 
 
-  window.addEventListener("load", function () {
-    var filterContent = document.querySelector(".filter-content");
-    filterContent.setAttribute("aria-expanded", "false");
-    filterContent.style.display = "none";
+    window.addEventListener("load", function () {
+      var filterContent = document.querySelector(".filter-content");
+      if (filterContent) {
+          filterContent.setAttribute("aria-expanded", "false");
+          filterContent.style.display = "none";
+      } else {
+          console.error("Element .filter-content nie został znaleziony.");
+      }
   });
 
 

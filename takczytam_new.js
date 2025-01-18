@@ -1693,38 +1693,31 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
   
   document.addEventListener("DOMContentLoaded", function (event) {
     const productElement = document.getElementById("rc_pid");
-
-    // Sprawdzamy, czy element istnieje
-    if (productElement) {
-      const productId = productElement.getAttribute("data-id");
-      console.log(`Znaleziono ID produktu: ${productId}`);
-      
-      const requestBody = JSON.stringify({
-        products: [{ products_id: productId }],
-      });
-
-      if (window.fetch) {
-        fetch("/ajax.php?p=conversion&f=products_info&ssl=1", {
-          method: "POST",
-          body: requestBody,
-          credentials: "same-origin",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-        })
+    const productId = productElement.getAttribute("data-id");
+    console.log(`Znaleziono ID produktu: ${productId}`);
+    const requestBody = JSON.stringify({
+      products: [{ products_id: productId }],
+    });
+    window.fetch &&
+      fetch("/ajax.php?p=conversion&f=products_info&ssl=1", {
+        method: "POST",
+        body: requestBody,
+        credentials: "same-origin",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
         .then((response) => response.json())
         .then((response) => {
           console.log("Odpowiedź z serwera:", response);
           const categoryIds = [];
-
           if (
             response.products &&
             Array.isArray(response.products) &&
             response.products.length > 0
           ) {
             const productData = response.products[0];
-
             if (
               productData.categoriesPaths &&
               Array.isArray(productData.categoriesPaths)
@@ -1741,7 +1734,6 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
           } else {
             console.log("Brak produktów w odpowiedzi.");
           }
-
           console.log("Id kategorie:", categoryIds);
           const compatibleCategoryIds = getCompatibleCategories(categoryIds);
           console.log("Kompatybilne kategorie:", compatibleCategoryIds);
@@ -1753,11 +1745,6 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
             error
           );
         });
-      }
-    } else {
-      console.log("Element z ID rc_pid nie istnieje na tej stronie.");
-    }
-
     function getCompatibleCategories(categoryIds) {
       const uniqueCompatibleCategoryIds = new Set();
       categoryIds.forEach((categoryId) => {

@@ -476,53 +476,107 @@
     pinfoContainerItem.style.display = "none";
   }
 
+  var newFilterBox = document.createElement("div");
+  newFilterBox.className = "filter-box";
+  var newFilterTitle = document.createElement("h5");
+  newFilterTitle.className = "filter-title";
+  newFilterTitle.style.cssText =
+    "font-size:2rem;color:#fff;background-color:#101828;padding: .7rem;";
+  newFilterTitle.setAttribute("data-toggle", "collapse");
+  newFilterTitle.setAttribute("data-target", "#newFilterContent");
+  newFilterTitle.innerHTML =
+    "Wyłącz produkty niedostępne oraz ostatnie egzemplarze <a class='filter-collapse' href='javascript:;' style='font-size:3.5rem;color:#fff;'></a>";
+  var newFilterContent = document.createElement("div");
+  newFilterContent.className = "filter-content collapse fade";
+  newFilterContent.id = "newFilterContent";
+  var newCheckbox = document.createElement("input");
+  newCheckbox.type = "checkbox";
+  newCheckbox.id = "newCheckbox";
+  newCheckbox.name = "newCheckbox";
+  newCheckbox.value = "newCheckbox";
+  var newLabel = document.createElement("label");
+  newLabel.setAttribute("for", "newCheckbox");
+  newLabel.innerHTML =
+    "Pokaż produkty dostępne od ręki w magazynie sklepu internetowego";
+  newLabel.style.cssText = "font-size:1.55rem;color:#101828;";
+  newFilterContent.appendChild(newCheckbox);
+  newFilterContent.appendChild(newLabel);
+  newFilterBox.appendChild(newFilterTitle);
+  newFilterBox.appendChild(newFilterContent);
+  var listingSorting = document.querySelector(
+    ".container-fluid.listing-sorting"
+  );
+  var nextContainer = listingSorting.nextElementSibling;
+  listingSorting.parentNode.insertBefore(newFilterBox, nextContainer);
 
-  
-  window.addEventListener("DOMContentLoaded", function () {
-    var newFilterBox = document.createElement("div");
-    newFilterBox.className = "filter-box";
-  
-    var newFilterTitle = document.createElement("h5");
-    newFilterTitle.className = "filter-title";
-    newFilterTitle.style.cssText =
-      "font-size:2rem;color:#fff;background-color:#101828;padding: .7rem;";
-    newFilterTitle.setAttribute("data-toggle", "collapse");
-    newFilterTitle.setAttribute("data-target", "#newFilterContent");
-    newFilterTitle.innerHTML =
-      "Wyłącz produkty niedostępne oraz ostatnie egzemplarze <a class='filter-collapse' href='javascript:;' style='font-size:3.5rem;color:#fff;'></a>";
-  
-    var newFilterContent = document.createElement("div");
-    newFilterContent.className = "filter-content collapse fade";
-    newFilterContent.id = "newFilterContent";
-  
-    var newCheckbox = document.createElement("input");
-    newCheckbox.type = "checkbox";
-    newCheckbox.id = "newCheckbox";
-    newCheckbox.name = "newCheckbox";
-    newCheckbox.value = "newCheckbox";
-  
-    var newLabel = document.createElement("label");
-    newLabel.setAttribute("for", "newCheckbox");
-    newLabel.innerHTML =
-      "Pokaż produkty dostępne od ręki w magazynie sklepu internetowego";
-    newLabel.style.cssText = "font-size:1.55rem;color:#101828;";
-  
-    newFilterContent.appendChild(newCheckbox);
-    newFilterContent.appendChild(newLabel);
-    newFilterBox.appendChild(newFilterTitle);
-    newFilterBox.appendChild(newFilterContent);
-  
-    var listingSorting = document.querySelector(
-      ".container-fluid.listing-sorting"
-    );
-  
-    if (listingSorting) {
-      var nextContainer = listingSorting.nextElementSibling;
-      listingSorting.parentNode.insertBefore(newFilterBox, nextContainer);
+
+
+  var currentURL = window.location.href;
+  if (
+    currentURL.includes("https://takczytam.com/q/") ||
+    currentURL === "https://takczytam.com/ostatnie-egzemplarze" ||
+    currentURL === "https://takczytam.com/produkty-niedostepne"
+  ) {
+    localStorage.removeItem("checkboxState");
+  }
+  var checkbox = document.getElementById("newCheckbox");
+  var productDivs = document.querySelectorAll(
+    ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+  );
+  var isChecked = localStorage.getItem("checkboxState") === "true";
+  var unavailableProducts = document.querySelectorAll(".unavailable-text");
+  var lastPieceProducts = document.querySelectorAll(".last-piece-text");
+  if (isChecked) {
+    checkbox.checked = !0;
+    hideUnavailableProducts();
+  }
+  checkbox.addEventListener("change", function () {
+    localStorage.setItem("checkboxState", checkbox.checked);
+    if (checkbox.checked) {
+      hideUnavailableProducts();
     } else {
-      console.warn("Element '.container-fluid.listing-sorting' nie został znaleziony.");
+      showAllProducts();
     }
   });
+  function hideUnavailableProducts() {
+    unavailableProducts.forEach(function (unavailableProduct) {
+      var productDiv = unavailableProduct.closest(
+        ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+      );
+      if (productDiv) {
+        productDiv.style.display = "none";
+      }
+    });
+    lastPieceProducts.forEach(function (lastPieceProduct) {
+      var productDiv = lastPieceProduct.closest(
+        ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+      );
+      if (productDiv) {
+        productDiv.style.display = "none";
+      }
+    });
+  }
+  function showAllProducts() {
+    unavailableProducts.forEach(function (unavailableProduct) {
+      var productDiv = unavailableProduct.closest(
+        ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+      );
+      if (productDiv && productDiv.style.display === "none") {
+        productDiv.style.display = "block";
+      }
+    });
+    lastPieceProducts.forEach(function (lastPieceProduct) {
+      var productDiv = lastPieceProduct.closest(
+        ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
+      );
+      if (productDiv && productDiv.style.display === "none") {
+        productDiv.style.display = "block";
+      }
+    });
+  }
+
+  
+  
 
   var spanElement = document.querySelector("#invoice_div label.rc-rc span");
   if (spanElement) {
@@ -2000,94 +2054,4 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
         element.parentElement.style.display = "none";
       }
     });
-  });
-
-
-  document.addEventListener("DOMContentLoaded", function () {
-    var currentURL = window.location.href;
-  
-    if (
-      currentURL.includes("https://takczytam.com/q/") ||
-      currentURL === "https://takczytam.com/ostatnie-egzemplarze" ||
-      currentURL === "https://takczytam.com/produkty-niedostepne"
-    ) {
-      localStorage.removeItem("checkboxState");
-      console.log("Checkbox state cleared for specific URLs.");
-    }
-  
-    var checkbox = document.getElementById("newCheckbox");
-    if (checkbox) {
-      console.log("Checkbox element found:", checkbox);
-  
-    var productDivs = document.querySelectorAll(
-        ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-      );
-      var isChecked = localStorage.getItem("checkboxState") === "true";
-      console.log("Initial checkbox state from localStorage:", isChecked);
-  
-      var unavailableProducts = document.querySelectorAll(".unavailable-text");
-      var lastPieceProducts = document.querySelectorAll(".last-piece-text");
-  
-      if (isChecked) {
-        checkbox.checked = true;
-        console.log("Checkbox is checked, hiding unavailable products.");
-        hideUnavailableProducts();
-      }
-  
-      checkbox.addEventListener("change", function () {
-        console.log("Checkbox clicked, new state:", checkbox.checked);
-        localStorage.setItem("checkboxState", checkbox.checked);
-        if (checkbox.checked) {
-          hideUnavailableProducts();
-        } else {
-          showAllProducts();
-        }
-      });
-  
-      function hideUnavailableProducts() {
-        console.log("Hiding unavailable products.");
-        unavailableProducts.forEach(function (unavailableProduct) {
-          var productDiv = unavailableProduct.closest(
-            ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-          );
-          if (productDiv) {
-            productDiv.style.display = "none";
-            console.log("Product hidden:", productDiv);
-          }
-        });
-        lastPieceProducts.forEach(function (lastPieceProduct) {
-          var productDiv = lastPieceProduct.closest(
-            ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-          );
-          if (productDiv) {
-            productDiv.style.display = "none";
-            console.log("Last piece product hidden:", productDiv);
-          }
-        });
-      }
-  
-      function showAllProducts() {
-        console.log("Showing all products.");
-        unavailableProducts.forEach(function (unavailableProduct) {
-          var productDiv = unavailableProduct.closest(
-            ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-          );
-          if (productDiv) {
-            productDiv.style.display = "block";
-            console.log("Product shown:", productDiv);
-          }
-        });
-        lastPieceProducts.forEach(function (lastPieceProduct) {
-          var productDiv = lastPieceProduct.closest(
-            ".one.carusel-item.product-one.product-item.panel.col-xs-24.col-md-6"
-          );
-          if (productDiv) {
-            productDiv.style.display = "block";
-            console.log("Last piece product shown:", productDiv);
-          }
-        });
-      }
-    } else {
-      console.warn("Checkbox element not found. Skipping initialization.");
-    }
   });

@@ -1261,12 +1261,22 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
   var customButton = document.querySelector(
     "a.button.button-light.order-stock-btn"
   );
-  customButton.addEventListener("click", function () {
-    var title = document.querySelector(".pinfo-name").textContent.trim();
-    var symbol = document.querySelector(".pinfo_model").textContent.trim();
-    localStorage.setItem("savedTitle", title);
-    localStorage.setItem("savedSymbol", symbol);
-  });
+  
+  if (customButton) { // Sprawdzenie, czy customButton istnieje
+    customButton.addEventListener("click", function () {
+      var titleElement = document.querySelector(".pinfo-name");
+      var symbolElement = document.querySelector(".pinfo_model");
+  
+      if (titleElement && symbolElement) { // Sprawdzenie, czy oba elementy istnieją
+        var title = titleElement.textContent.trim();
+        var symbol = symbolElement.textContent.trim();
+  
+        localStorage.setItem("savedTitle", title);
+        localStorage.setItem("savedSymbol", symbol);
+      }
+    });
+  }
+  
 
   
   document.addEventListener("DOMContentLoaded", function () {

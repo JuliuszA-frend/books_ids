@@ -72,11 +72,15 @@
 
 
   var divElement = document.querySelector(".view_stock_qauntity_info");
+if (divElement) { // Sprawdzamy, czy element istnieje
   var quantityText = divElement.textContent.trim();
   var spanElement = document.createElement("span");
   spanElement.className = "quantity_info_text";
   spanElement.textContent = " w sklepie internetowym";
   divElement.appendChild(spanElement);
+} else {
+  console.log("Element .view_stock_qauntity_info nie został znaleziony.");
+}
 
 
   var authorLinks = document.getElementsByClassName("pinfo-author");

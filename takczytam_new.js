@@ -780,12 +780,10 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
                     newButton.style.backgroundColor = "#FFA726";
                     newButton.style.color = "#07350a";
                     newButton.style.fontWeight = "bold";
+                    newButton.style.cursor = "pointer";
+                    newButton.style.padding = "8px 12px";
+                    newButton.style.fontSize = "12px";
                     link.parentNode.replaceChild(newButton, link);
-        
-                    // Dodanie akcji dla nowego przycisku
-                    newButton.addEventListener("click", function () {
-                        alert("Przycisk Zamów został kliknięty!");
-                    });
                 });
         
                 modal.innerHTML = `<div class="modal-dialog">

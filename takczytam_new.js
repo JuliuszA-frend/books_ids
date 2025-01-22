@@ -774,7 +774,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
                     "ul:nth-child(1) > li > p > a"
                 );
                 linksToReplace.forEach(function (link) {
-                    var newButton = document.createElement("button");
+                    var newButton = document.createElement("a");
                     newButton.textContent = "Zamów";
                     newButton.classList.add("button", "button-primary");
                     newButton.style.backgroundColor = "#FFA726";

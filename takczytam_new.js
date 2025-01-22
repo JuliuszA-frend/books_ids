@@ -719,16 +719,16 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
             if (!stockInfoElementNot) return;
             var buttonOrder = document.createElement("a");
             buttonOrder.innerHTML =
-              'ZAMÓW Z INNEJ KSIĘGARNI TAK CZYTAM<span class="mdi mdi-store" style="margin-left: 4px;"></span>';
+                'ZAMÓW Z INNEJ KSIĘGARNI TAK CZYTAM<span class="mdi mdi-store" style="margin-left: 4px;"></span>';
             buttonOrder.classList.add(
-              "button",
-              "button-light",
-              "order-stock-btn"
+                "button",
+                "button-light",
+                "order-stock-btn"
             );
             buttonOrder.setAttribute("data-toggle", "tooltip");
             buttonOrder.setAttribute(
-              "data-original-title",
-              "Ostatnie egzemplarze. Sprawdź dostępność w wybranej księgarni TAK CZYTAM i zamów."
+                "data-original-title",
+                "Ostatnie egzemplarze. Sprawdź dostępność w wybranej księgarni TAK CZYTAM i zamów."
             );
             buttonOrder.setAttribute("href", "javascript:;");
             buttonOrder.style.backgroundColor = "#FFA726";
@@ -737,78 +737,93 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
             buttonOrder.style.margin = "15px 0px";
             buttonOrder.style.fontWeight = "bold";
             if (isMobile) {
-              buttonOrder.style.display = "block";
-              buttonOrder.style.margin = "15px auto";
-              buttonOrder.style.maxWidth = "100%";
+                buttonOrder.style.display = "block";
+                buttonOrder.style.margin = "15px auto";
+                buttonOrder.style.maxWidth = "100%";
             } else {
-              buttonOrder.style.maxWidth = "max-content";
-              buttonOrder.style.margin = "15px 0";
+                buttonOrder.style.maxWidth = "max-content";
+                buttonOrder.style.margin = "15px 0";
             }
             buttonOrder.addEventListener("click", function () {
-              var title = document
-                .querySelector(".pinfo-name")
-                .textContent.trim();
-              var symbol = document
-                .querySelector(".pinfo_model")
-                .textContent.trim();
-              localStorage.setItem("savedTitle", title);
-              localStorage.setItem("savedSymbol", symbol);
+                var title = document
+                    .querySelector(".pinfo-name")
+                    .textContent.trim();
+                var symbol = document
+                    .querySelector(".pinfo_model")
+                    .textContent.trim();
+                localStorage.setItem("savedTitle", title);
+                localStorage.setItem("savedSymbol", symbol);
             });
             buttonOrder.addEventListener("click", function () {
-              var overlay = document.createElement("div");
-              overlay.classList.add("modal-overlay");
-              overlay.style.position = "fixed";
-              overlay.style.top = "0";
-              overlay.style.left = "0";
-              overlay.style.width = "100%";
-              overlay.style.height = "100%";
-              overlay.style.backgroundColor = "#07350a";
-              overlay.style.opacity = "0.5";
-              overlay.style.zIndex = "1049";
-              var modal = document.createElement("div");
-              modal.classList.add("modal");
-              var clonedTechnicalRowOrder = technicalRowOrder.cloneNode(!0);
-              var linksToHide = clonedTechnicalRowOrder.querySelectorAll(
-                "ul:nth-child(1) > li > p > a"
-              );
-              linksToHide.forEach(function (link) {
-                link.style.display = "none";
-              });
-              modal.innerHTML = `<div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header" style="position: relative;">
-                                        <div style="margin-right: 25px;">
-                                            <h3 class="modal-title" style="font-size: 2rem;">Sprawdź dostępność w wybranej księgarni i zamów z wysyłką</h3>
-                                            <p style="font-size: 1.5rem;">Jeśli książka jest dostępna w którejś z poniższych księgarni, to możemy ją do Ciebie wysłać. Kliknij przycisk ZAMÓW Z INNEJ KSIĘGARNI i wypełnij formularz.</p>
+                var overlay = document.createElement("div");
+                overlay.classList.add("modal-overlay");
+                overlay.style.position = "fixed";
+                overlay.style.top = "0";
+                overlay.style.left = "0";
+                overlay.style.width = "100%";
+                overlay.style.height = "100%";
+                overlay.style.backgroundColor = "#07350a";
+                overlay.style.opacity = "0.5";
+                overlay.style.zIndex = "1049";
+                var modal = document.createElement("div");
+                modal.classList.add("modal");
+                var clonedTechnicalRowOrder = technicalRowOrder.cloneNode(true);
+        
+                // Zamiast ukrywania przycisków, zastępujemy je nowymi
+                var linksToReplace = clonedTechnicalRowOrder.querySelectorAll(
+                    "ul:nth-child(1) > li > p > a"
+                );
+                linksToReplace.forEach(function (link) {
+                    var newButton = document.createElement("button");
+                    newButton.textContent = "Zamów";
+                    newButton.classList.add("button", "button-primary");
+                    newButton.style.backgroundColor = "#FFA726";
+                    newButton.style.color = "#07350a";
+                    newButton.style.fontWeight = "bold";
+                    link.parentNode.replaceChild(newButton, link);
+        
+                    // Dodanie akcji dla nowego przycisku
+                    newButton.addEventListener("click", function () {
+                        alert("Przycisk Zamów został kliknięty!");
+                    });
+                });
+        
+                modal.innerHTML = `<div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="position: relative;">
+                                            <div style="margin-right: 25px;">
+                                                <h3 class="modal-title" style="font-size: 2rem;">Sprawdź dostępność w wybranej księgarni i zamów z wysyłką</h3>
+                                                <p style="font-size: 1.5rem;">Jeśli książka jest dostępna w którejś z poniższych księgarni, to możemy ją do Ciebie wysłać. Kliknij przycisk ZAMÓW Z INNEJ KSIĘGARNI i wypełnij formularz.</p>
+                                            </div>
+                                            <button type="button" class="close" data-dismiss="modal" style="font-size: 40px;position: absolute;top: 0;right: 5px;opacity: 1;">×</button>
                                         </div>
-                                        <button type="button" class="close" data-dismiss="modal" style="font-size: 40px;position: absolute;top: 0;right: 5px;opacity: 1;">×</button>
+                                        <div class="modal-body" style="max-height: 50vh; overflow: auto;">${clonedTechnicalRowOrder.outerHTML}</div>
+                                        <div class="modal-footer" style="padding: 0; text-align: center;">
+                                            <a href="https://takczytam.com/zamowienie-formularz" class="button-margin button button-primary waves-effect" style="background-color: rgb(255, 167, 38);color: rgb(7, 53, 10) !important;max-width: max-content;margin: 15px 0px;font-weight: bold;"> ZAMÓW Z INNEJ KSIĘGARNI<span class="mdi mdi-store" style="margin-left: 4px;"></span></a>
+                                        </div>
                                     </div>
-                                    <div class="modal-body" style="max-height: 50vh; overflow: auto;">${clonedTechnicalRowOrder.outerHTML}</div>
-                                    <div class="modal-footer" style="padding: 0; text-align: center;">
-                                        <a href="https://takczytam.com/zamowienie-formularz" class="button-margin button button-primary waves-effect" style="background-color: rgb(255, 167, 38);color: rgb(7, 53, 10) !important;max-width: max-content;margin: 15px 0px;font-weight: bold;"> ZAMÓW Z INNEJ KSIĘGARNI<span class="mdi mdi-store" style="margin-left: 4px;"></span></a>
-                                    </div>
-                                </div>
-                            </div>`;
-              document.body.appendChild(overlay);
-              document.body.appendChild(modal);
-              var closeButton = modal.querySelector(".close");
-              closeButton.addEventListener("click", function () {
-                modal.style.display = "none";
-                document.body.removeChild(modal);
-                document.body.removeChild(overlay);
-              });
-              modal.addEventListener("click", function (event) {
-                if (!event.target.closest(".modal-content")) {
-                  modal.style.display = "none";
-                  document.body.removeChild(modal);
-                  document.body.removeChild(overlay);
-                }
-              });
-              modal.style.display = "block";
-              overlay.style.display = "block";
+                                </div>`;
+                document.body.appendChild(overlay);
+                document.body.appendChild(modal);
+                var closeButton = modal.querySelector(".close");
+                closeButton.addEventListener("click", function () {
+                    modal.style.display = "none";
+                    document.body.removeChild(modal);
+                    document.body.removeChild(overlay);
+                });
+                modal.addEventListener("click", function (event) {
+                    if (!event.target.closest(".modal-content")) {
+                        modal.style.display = "none";
+                        document.body.removeChild(modal);
+                        document.body.removeChild(overlay);
+                    }
+                });
+                modal.style.display = "block";
+                overlay.style.display = "block";
             });
             container.appendChild(buttonOrder);
-          }
+        }
+        
           function createBadge(isMobile) {
             var badge = document.createElement("span");
             badge.innerHTML =

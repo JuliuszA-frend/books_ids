@@ -744,16 +744,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
                 buttonOrder.style.maxWidth = "max-content";
                 buttonOrder.style.margin = "15px 0";
             }
-            buttonOrder.addEventListener("click", function () {
-                var title = document
-                    .querySelector(".pinfo-name")
-                    .textContent.trim();
-                var symbol = document
-                    .querySelector(".pinfo_model")
-                    .textContent.trim();
-                localStorage.setItem("savedTitle", title);
-                localStorage.setItem("savedSymbol", symbol);
-            });
+            
             buttonOrder.addEventListener("click", function () {
                 var overlay = document.createElement("div");
                 overlay.classList.add("modal-overlay");
@@ -777,6 +768,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
                     var newButton = document.createElement("a");
                     newButton.textContent = "Zamów";
                     newButton.classList.add("button", "button-primary");
+                    newButton.setAttribute('id', "order_last_stock");
                     newButton.style.backgroundColor = "#FFA726";
                     newButton.style.color = "#07350a";
                     newButton.style.fontWeight = "bold";

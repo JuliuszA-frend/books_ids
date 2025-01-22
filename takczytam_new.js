@@ -773,7 +773,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
                     newButton.style.color = "#07350a";
                     newButton.style.fontWeight = "bold";
                     newButton.style.cursor = "pointer";
-                    newButton.style.padding = "8px 12px";
+                    newButton.style.padding = "6px 12px";
                     newButton.style.fontSize = "12px";
                     link.parentNode.replaceChild(newButton, link);
                 });

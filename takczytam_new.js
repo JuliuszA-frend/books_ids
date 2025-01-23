@@ -1288,42 +1288,6 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
     }
   }
 
- 
-  var customButton = document.querySelector(
-    "a.button.button-light.order-stock-btn"
-  );
-  
-  if (customButton) { // Sprawdzenie, czy customButton istnieje
-    customButton.addEventListener("click", function () {
-      var titleElement = document.querySelector(".pinfo-name");
-      var symbolElement = document.querySelector(".pinfo_model");
-  
-      if (titleElement && symbolElement) { // Sprawdzenie, czy oba elementy istnieją
-        var title = titleElement.textContent.trim();
-        var symbol = symbolElement.textContent.trim();
-  
-        localStorage.setItem("savedTitle", title);
-        localStorage.setItem("savedSymbol", symbol);
-      }
-    });
-  }
-  
-
-  
-  document.addEventListener("DOMContentLoaded", function () {
-    var savedTitle = localStorage.getItem("savedTitle");
-    var savedSymbol = localStorage.getItem("savedSymbol");
-    if (savedTitle && savedSymbol) {
-      var inputField = document.getElementById("field_pl_1_8");
-      if (inputField) {
-        inputField.value = savedTitle + " " + savedSymbol;
-      } else {
-        console.error('Nie znaleziono inputa o id "field_pl_1_8"');
-      }
-    } else {
-      console.error("Nie znaleziono zapisanych danych w localStorage");
-    }
-  });
 
  
   const urlFragments = ["https://takczytam.com/autor-"];

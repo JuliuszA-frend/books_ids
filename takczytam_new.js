@@ -1071,11 +1071,6 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
           ?.textContent.trim();
         const priceElement = document.querySelector("span[itemprop='price']");
         const productPrice = priceElement?.getAttribute("content") || null;
-        const modelElement = document.querySelector("span[itemprop='model'] .pinfo_model");
-        if (!modelElement) {
-          console.warn("Nie znaleziono elementu modelu produktu.");
-        }
-        const productModel = modelElement?.textContent.trim() || null;
         const imageElement = document.querySelector(
           "a#link_img_main_0 img[itemprop='image']"
         );
@@ -1117,7 +1112,6 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
             maxQuantity: availableQuantity,
             price: productPrice,
             imageUrl: imageUrl,
-            model: productModel,
           });
         }
         saveReservations(reservations);

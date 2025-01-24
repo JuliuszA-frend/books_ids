@@ -785,8 +785,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
                                                 <h3 class="modal-title" style="font-size: 2rem;">Sprawdź dostępność w wybranej księgarni i zamów z wysyłką</h3>
                                                 <p style="font-size: 1.5rem;">Jeśli książka jest dostępna w którejś z poniższych księgarni, to możemy ją do Ciebie wysłać.</p>
                                                 <p>Kliknij przycisk ZAMÓW przy danej księgarni i dodaj książkę do widgetu zamówienia ostatnich egzemplarzy.</p>
-                                                <p>Dodawać produkty do widgetu możesz tylko z jednej wybranej księgarni.</p>
-                                                <p>Natomiast różnych produktów może być wiele. Warunkiem jest tylko to, że będą w jednej księgarni.</p>
+                                                <p>Możesz dodać wiele różnych produktów, pod warunkiem, że pochodzą one z jednej księgarni.</p>
                                             </div>
                                             <button type="button" class="close" data-dismiss="modal" style="font-size: 40px;position: absolute;top: 0;right: 5px;opacity: 1;">×</button>
                                         </div>

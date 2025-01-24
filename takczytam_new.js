@@ -783,13 +783,15 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
                                         <div class="modal-header" style="position: relative;">
                                             <div style="margin-right: 25px;">
                                                 <h3 class="modal-title" style="font-size: 2rem;">Sprawdź dostępność w wybranej księgarni i zamów z wysyłką</h3>
-                                                <p style="font-size: 1.5rem;">Jeśli książka jest dostępna w którejś z poniższych księgarni, to możemy ją do Ciebie wysłać. Kliknij przycisk ZAMÓW Z INNEJ KSIĘGARNI i wypełnij formularz.</p>
+                                                <p style="font-size: 1.5rem;">Jeśli książka jest dostępna w którejś z poniższych księgarni, to możemy ją do Ciebie wysłać.</p>
+                                                <p>Kliknij przycisk ZAMÓW przy danej księgarni i dodaj książkę do widgetu zamówienia ostatnich egzemplarzy.</p>
+                                                <p>Dodawać produkty do widgetu możesz tylko z jednej wybranej księgarni.</p>
+                                                <p>Natomiast różnych produktów może być wiele. Warunkiem jest tylko to, że będą w jednej księgarni.</p>
                                             </div>
                                             <button type="button" class="close" data-dismiss="modal" style="font-size: 40px;position: absolute;top: 0;right: 5px;opacity: 1;">×</button>
                                         </div>
                                         <div class="modal-body" style="max-height: 50vh; overflow: auto;">${clonedTechnicalRowOrder.outerHTML}</div>
                                         <div class="modal-footer" style="padding: 0; text-align: center;">
-                                            <a href="https://takczytam.com/zamowienie-formularz" class="button-margin button button-primary waves-effect" style="background-color: rgb(255, 167, 38);color: rgb(7, 53, 10) !important;max-width: max-content;margin: 15px 0px;font-weight: bold;"> ZAMÓW Z INNEJ KSIĘGARNI<span class="mdi mdi-store" style="margin-left: 4px;"></span></a>
                                         </div>
                                     </div>
                                 </div>`;

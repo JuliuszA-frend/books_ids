@@ -1075,6 +1075,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
           "a#link_img_main_0 img[itemprop='image']"
         );
         const imageUrl = imageElement?.getAttribute("data-zoom-image") || null;
+        const symbolNumber = document.querySelector('.pinfo_model')?.textContent.trim();
         if (!productTitle || !cityName || isNaN(availableQuantity)) {
           salert_mini(
             "Nie udało się dodać rezerwacji. Brak wymaganych danych.",
@@ -1112,6 +1113,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
             maxQuantity: availableQuantity,
             price: productPrice,
             imageUrl: imageUrl,
+            symbol: symbolNumber,
           });
         }
         saveReservations(reservations);

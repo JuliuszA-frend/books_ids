@@ -1330,33 +1330,24 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
   }
   transformElement(149, "https://takczytam.com/c/52/nowosci.html");
   transformElement(
-    94,
-    "https://takczytam.com/c/473/rozwoj-osobisty-styl-zycia-ksiazki-psychologiczne-ksiazka-niebeletrystyczna.html"
-  );
-  transformElement(
     117,
     "https://takczytam.com/c/491/dla-dzieci-i-mlodziezy.html"
   );
-  transformElement(131, "https://takczytam.com/c/273/kryminal.html");
+  transformElement(131, "https://takczytam.com/c/277/ksiazki-mlodziezowe-i-young-adult.html");
   transformElement(
     139,
-    "https://takczytam.com/c/340/dla-mlodziezy-dziecieca-i-mlodziezowa.html"
+    "https://takczytam.com/c/278/historyczna-i-przygodowa.html"
   );
-  transformElement(143, "https://takczytam.com/c/184/dziadka-.html");
   transformElement(
     145,
-    "https://takczytam.com/c/283/reportaz-i-publicystyka-literatura-faktu-biografie-reportaze-i-publicystyka-ksiazka-niebeletrystyczna.html"
+    "https://takczytam.com/c/266/romans-i-erotyka.html"
   );
-  transformElement(142, "https://takczytam.com/seria-jakie-to");
+  transformElement(142, "https://takczytam.com/c/336/bajki-i-opowiadania-dla-dzieci-dziecieca-i-mlodziezowa.html");
   transformElement(
     129,
-    "https://takczytam.com/c/339/powiesci-dla-dzieci-dla-dzieci-dziecieca-i-mlodziezowa.html"
+    "https://takczytam.com/c/273/kryminal.html"
   );
-  transformElement(
-    120,
-    "https://takczytam.com/c/470/opowiesci-o-zwierzetach-zwierzeta-i-przyroda-ksiazka-niebeletrystyczna.html"
-  );
-  transformElement(105, "https://takczytam.com/c/183/babci-.html");
+  
   transformElement(126, "https://takczytam.com/wydawnictwo-pasja");
 
   

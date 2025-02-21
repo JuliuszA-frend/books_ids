@@ -1336,19 +1336,19 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
   transformElement(131, "https://takczytam.com/c/277/ksiazki-mlodziezowe-i-young-adult.html");
   transformElement(
     139,
-    "https://takczytam.com/c/278/historyczna-i-przygodowa.html"
+    "https://takczytam.com/c/488/poszukujacych-kobiecej-perspetywy.html"
   );
   transformElement(
     145,
-    "https://takczytam.com/c/266/romans-i-erotyka.html"
+    "https://takczytam.com/c/326/ciasta-i-desery-kulinaria-ksiazka-niebeletrystyczna.html"
   );
   transformElement(142, "https://takczytam.com/c/336/bajki-i-opowiadania-dla-dzieci-dziecieca-i-mlodziezowa.html");
   transformElement(
     129,
-    "https://takczytam.com/c/273/kryminal.html"
+    "https://takczytam.com/ksiazki-o-kosmosie"
   );
   
-  transformElement(126, "https://takczytam.com/wydawnictwo-pasja");
+  transformElement(126, "https://takczytam.com/c/273/kryminal-sensacja-thriller-beletrystyka.html");
 
   
   document.addEventListener("DOMContentLoaded", function () {

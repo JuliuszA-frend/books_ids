@@ -1333,22 +1333,20 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
     117,
     "https://takczytam.com/c/491/dla-dzieci-i-mlodziezy.html"
   );
-  transformElement(131, "https://takczytam.com/c/277/ksiazki-mlodziezowe-i-young-adult.html");
+  transformElement(105, "https://takczytam.com/467-wielkanoc");
+  
+  transformElement(142, "https://takczytam.com/c/165/dla-liceow-i-technikow-oferta-dla-szkol-przedszkoli-i-placowek-psychologiczno-pedagogicznych.html");
   transformElement(
-    139,
-    "https://takczytam.com/c/488/poszukujacych-kobiecej-perspetywy.html"
-  );
-  transformElement(
-    145,
-    "https://takczytam.com/c/326/ciasta-i-desery-kulinaria-ksiazka-niebeletrystyczna.html"
-  );
-  transformElement(142, "https://takczytam.com/c/336/bajki-i-opowiadania-dla-dzieci-dziecieca-i-mlodziezowa.html");
-  transformElement(
-    129,
-    "https://takczytam.com/ksiazki-o-kosmosie"
+    143,
+    "https://takczytam.com/c/357/zielona-kuchnia-wege-superfoods-kulinaria-ksiazka-niebeletrystyczna.html"
   );
   
-  transformElement(126, "https://takczytam.com/c/273/kryminal-sensacja-thriller-beletrystyka.html");
+  transformElement(145, "https://takczytam.com/c/572/puzzle-gry-zabawy-lamiglowki-puzzle-dziecieca-i-mlodziezowa.html");
+  transformElement(94, "https://takczytam.com/wydawnictwo-tako");
+  transformElement(131, "https://takczytam.com/c/492/beletrystyka-.html");
+  transformElement(126, "https://takczytam.com/c/9008/gry-planszowe-quizy-gry-zabawki-quizy-puzzle-dziecieca-i-mlodziezowa.html");
+  transformElement(129, "https://takczytam.com/c/281/biografie-listy-wspomnienia-literatura-faktu-biografie-reportaze-i-publicystyka-ksiazka-niebeletrystyczna.html");
+
 
   
   document.addEventListener("DOMContentLoaded", function () {

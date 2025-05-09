@@ -1328,27 +1328,15 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
       spanElement.parentNode.replaceChild(linkElement, spanElement);
     }
   }
-  transformElement(149, "https://takczytam.com/c/52/nowosci.html");
-  transformElement(
-    117,
-    "https://takczytam.com/c/491/dla-dzieci-i-mlodziezy.html"
-  );
-  transformElement(105, "https://takczytam.com/467-wielkanoc");
   
-  transformElement(142, "https://takczytam.com/c/165/dla-liceow-i-technikow-oferta-dla-szkol-przedszkoli-i-placowek-psychologiczno-pedagogicznych.html");
-  transformElement(
-    143,
-    "https://takczytam.com/c/357/zielona-kuchnia-wege-superfoods-kulinaria-ksiazka-niebeletrystyczna.html"
-  );
-  transformElement(
-    139,
-    "https://takczytam.com/c/296/historia-polski-historia-ksiazka-niebeletrystyczna.html"
-  );
-  transformElement(145, "https://takczytam.com/c/572/puzzle-gry-zabawy-lamiglowki-puzzle-dziecieca-i-mlodziezowa.html");
-  transformElement(94, "https://takczytam.com/wydawnictwo-tako");
-  transformElement(131, "https://takczytam.com/c/492/beletrystyka-.html");
   transformElement(126, "https://takczytam.com/c/9008/gry-planszowe-quizy-gry-zabawki-quizy-puzzle-dziecieca-i-mlodziezowa.html");
-  transformElement(129, "https://takczytam.com/c/281/biografie-listy-wspomnienia-literatura-faktu-biografie-reportaze-i-publicystyka-ksiazka-niebeletrystyczna.html");
+  transformElement(126, "https://takczytam.com/c/185/mamy-.html");
+  transformElement(165, "https://takczytam.com/c/165/dla-liceow-i-technikow-oferta-dla-szkol-przedszkoli-i-placowek-psychologiczno-pedagogicznych.html");
+  transformElement(143, "https://takczytam.com/c/196/szkola-podstawowa-oferta-dla-szkol-przedszkoli-i-placowek-psychologiczno-pedagogicznych.html");
+  transformElement(145, "https://takczytam.com/c/301/jezyki-obce-ksiazka-niebeletrystyczna.html");
+  transformElement(94, "https://takczytam.com/c/391/komiks.html");
+  transformElement(131, "https://takczytam.com/c/265/beletrystyka.html");
+  transformElement(129, "https://takczytam.com/c/388/polska-albumy-krajoznawcze-podroze-przewodniki-i-albumy-krajoznawcze-mapy-ksiazka-niebeletrystyczna.html");
 
 
   

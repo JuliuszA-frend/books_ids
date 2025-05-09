@@ -1340,7 +1340,10 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
     143,
     "https://takczytam.com/c/357/zielona-kuchnia-wege-superfoods-kulinaria-ksiazka-niebeletrystyczna.html"
   );
-  
+  transformElement(
+    139,
+    "https://takczytam.com/c/296/historia-polski-historia-ksiazka-niebeletrystyczna.html"
+  );
   transformElement(145, "https://takczytam.com/c/572/puzzle-gry-zabawy-lamiglowki-puzzle-dziecieca-i-mlodziezowa.html");
   transformElement(94, "https://takczytam.com/wydawnictwo-tako");
   transformElement(131, "https://takczytam.com/c/492/beletrystyka-.html");

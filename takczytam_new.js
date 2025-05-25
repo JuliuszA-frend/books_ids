@@ -1331,6 +1331,10 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
 
   transformElement(149, "https://takczytam.com/c/52/nowosci.html");
   transformElement(117, "https://takczytam.com/c/491/dla-dzieci-i-mlodziezy.html");
+  transformElement(191, "https://takczytam.com/c/498/0-2-lata-podzial-wiekowy-dziecieca-i-mlodziezowa.html");
+  transformElement(192, "https://takczytam.com/c/499/3-4-lata-podzial-wiekowy-dziecieca-i-mlodziezowa.html");
+  transformElement(193, "https://takczytam.com/c/500/5-6-lat-podzial-wiekowy-dziecieca-i-mlodziezowa.html");
+  transformElement(194, "https://takczytam.com/c/501/7-8-lat-podzial-wiekowy-dziecieca-i-mlodziezowa.html");
   transformElement(126, "https://takczytam.com/c/185/mamy-.html");
   transformElement(142, "https://takczytam.com/c/165/dla-liceow-i-technikow-oferta-dla-szkol-przedszkoli-i-placowek-psychologiczno-pedagogicznych.html");
   transformElement(143, "https://takczytam.com/c/196/szkola-podstawowa-oferta-dla-szkol-przedszkoli-i-placowek-psychologiczno-pedagogicznych.html");

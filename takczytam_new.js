@@ -56,7 +56,7 @@
   const phoneNumber = phoneElement.textContent.trim().match(/[0-9]+/)[0];
   const phoneLink = document.createElement("a");
   phoneLink.setAttribute("href", "tel:" + phoneNumber);
-  phoneLink.textContent = "501-310-083";
+  phoneLink.textContent = "42-634-02-63";
   phoneElement.innerHTML = "";
   phoneElement.appendChild(phoneLink);
   phoneElement.appendChild(document.createTextNode(" Pon-Pt 8:00 - 16:00"));

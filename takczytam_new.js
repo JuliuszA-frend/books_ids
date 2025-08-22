@@ -52,31 +52,23 @@
   addCartIcon("pinfo-complementary-to-cart");
 
 
-  // 1. Wybierz główny element <li>, który zawiera numer
+  // 1. Wybierz element <li> zawierający numer telefonu
   const phoneElement = document.querySelector('li[itemprop="telephone"]');
 
-  // 2. Sprawdź, czy element został znaleziony
+  // 2. Sprawdź, czy element istnieje
   if (phoneElement) {
-    // 3. Pobierz cały tekst z elementu, np. " 42 634 02 63 Pon-Pt 8:00 - 16:00"
-    const fullText = phoneElement.textContent;
+    // 3. Zdefiniuj stary numer, który chcemy podmienić
+    const oldNumberText = '42 634 02 63';
 
-    // 4. Znajdź numer telefonu w tekście za pomocą wyrażenia regularnego
-    //    To wyrażenie szuka formatu: dwie cyfry, spacja, trzy cyfry, spacja itd.
-    const numberMatch = fullText.match(/(\d{2}\s\d{3}\s\d{2}\s\d{2})/);
+    // 4. Zdefiniuj nowy numer i przygotuj go do użycia w linku
+    const newDisplayedNumber = '501 310 083';
+    const newCleanNumberForHref = '501310083';
 
-    // 5. Jeśli numer został znaleziony w tekście...
-    if (numberMatch && numberMatch[0]) {
-      const displayedNumber = numberMatch[0]; // np. "42 634 02 63"
-      
-      // 6. Stwórz "czystą" wersję numeru (bez spacji) dla linku "tel:"
-      const cleanNumberForHref = displayedNumber.replace(/\s/g, ''); // "426340263"
+    // 5. Stwórz gotowy do wstawienia link HTML
+    const newLinkHTML = `<a href="tel:${newCleanNumberForHref}">${newDisplayedNumber}</a>`;
 
-      // 7. Stwórz kompletny tag <a> jako tekst
-      const newLinkHTML = `<a href="tel:${cleanNumberForHref}">${displayedNumber}</a>`;
-
-      // 8. Podmień w oryginalnym HTML-u elementu <li> sam tekst numeru na nowy link
-      phoneElement.innerHTML = phoneElement.innerHTML.replace(displayedNumber, newLinkHTML);
-    }
+    // 6. Podmień stary numer w kodzie HTML na nowy link
+    phoneElement.innerHTML = phoneElement.innerHTML.replace(oldNumberText, newLinkHTML);
   }
 
 

@@ -52,14 +52,23 @@
   addCartIcon("pinfo-complementary-to-cart");
 
 
-  const phoneElement = document.querySelector('li[itemprop="telephone"]');
-  const phoneNumber = phoneElement.textContent.trim().match(/[0-9]+/)[0];
-  const phoneLink = document.createElement("a");
-  phoneLink.setAttribute("href", "tel:" + phoneNumber);
-  phoneLink.textContent = "501-310-083";
-  phoneElement.innerHTML = "";
-  phoneElement.appendChild(phoneLink);
-  phoneElement.appendChild(document.createTextNode(" Pon-Pt 8:00 - 16:00"));
+  // 1. Wybierz bezpośrednio element linku <a>
+  const phoneLink = document.querySelector('li[itemprop="telephone"] a');
+
+  // 2. Sprawdź, czy element istnieje, aby uniknąć błędów
+  if (phoneLink) {
+    // 3. Pobierz numer telefonu z tekstu linku
+    const displayedNumber = phoneLink.textContent.trim(); // "501-310-083"
+
+    // 4. Usuń wszystkie znaki, które nie są cyframi (np. myślniki)
+    //    Wyrażenie \D oznacza "dowolny znak, który nie jest cyfrą"
+    const cleanNumber = displayedNumber.replace(/\D/g, ''); // "501310083"
+
+    // 5. Zaktualizuj atrybut href, używając poprawnego numeru
+    phoneLink.href = `tel:${cleanNumber}`;
+  } else {
+    console.error("Nie znaleziono linku z numerem telefonu.");
+  }
 
 
   document.addEventListener("click", function (event) {

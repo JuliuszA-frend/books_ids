@@ -1804,67 +1804,87 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
     }
     let allDisplayedProducts = new Set();
     function displayCategoriesAndProducts(data) {
-      const container = document.createElement("div");
-      container.className = "carousel-container";
-      if (data.categories && data.categories.length > 0) {
-        data.categories.forEach((category) => {
-          const categoryElement = document.createElement("div");
-          categoryElement.className = "category";
-          const categoryName = document.createElement("h2");
-          const customCategoryName = categoryNames[category.category_id];
-          if (customCategoryName) {
-            categoryName.textContent = customCategoryName;
-          } else {
-            categoryName.textContent = `${category.name_pl} - Może zainteresuje Cię jeszcze coś z tej kategorii`;
-          }
-          categoryElement.appendChild(categoryName);
-          const productsContainer = document.createElement("div");
-          productsContainer.className = "products-carousel";
-          if (category.products && category.products.length > 0) {
-            category.products.forEach((product) => {
-              console.log(
-                `Produkt ID: ${product.products_id}, Nazwa: ${product.name_pl}, Ilość: ${product.quantity}`
-              );
-            });
-            const availableProducts = category.products.filter(
-              (product) => product.quantity > 0
-            );
-            console.log(
-              `Znaleziono ${availableProducts.length} produktów dostępnych w kategorii ${category.name_pl}.`
-            );
-            availableProducts.forEach((product) => {
-              console.log(
-                `Produkt ID: ${product.products_id}, Nazwa: ${product.name_pl}, Ilość: ${product.quantity}`
-              );
-            });
-            const randomProducts = getRandomProducts(availableProducts, 8);
-            console.log(
-              `Wylosowano ${randomProducts.length} produktów z kategorii ${category.name_pl}.`
-            );
+    const container = document.createElement("div");
+    container.className = "carousel-container";
+
+    if (data.categories && data.categories.length > 0) {
+      data.categories.forEach((category) => {
+        if (category.products && category.products.length > 0) {
+          const availableProducts = category.products.filter(
+            (product) => product.quantity > 0
+          );
+          const randomProducts = getRandomProducts(availableProducts, 8);
+
+          // Tworzymy elementy dla kategorii tylko wtedy, gdy są w niej dostępne produkty do wyświetlenia
+          if (randomProducts.length > 0) {
+            const categoryElement = document.createElement("div");
+            categoryElement.className = "category";
+            // ZMIANA: Dodajemy pozycjonowanie, aby strzałki wyświetlały się poprawnie
+            categoryElement.style.position = "relative";
+
+            const categoryName = document.createElement("h2");
+            const customCategoryName = categoryNames[category.category_id];
+            if (customCategoryName) {
+              categoryName.textContent = customCategoryName;
+            } else {
+              categoryName.textContent = `${category.name_pl} - Może zainteresuje Cię jeszcze coś z tej kategorii`;
+            }
+            categoryElement.appendChild(categoryName);
+
+            const productsContainer = document.createElement("div");
+            productsContainer.className = "products-carousel";
+
             randomProducts.forEach((product) => {
               if (
                 product.products_id !== productId &&
                 !allDisplayedProducts.has(product.products_id)
               ) {
-                console.log(
-                  `Wyświetlam produkt: ${product.products_id} - ${product.name_pl}`
-                );
                 const productElement = createProductElement(product);
                 productsContainer.appendChild(productElement);
                 allDisplayedProducts.add(product.products_id);
               }
             });
-          } else {
-            console.log(`Brak produktów w kategorii ${category.name_pl}.`);
+            categoryElement.appendChild(productsContainer);
+
+            // ### NOWY KOD: Dodawanie przycisków nawigacyjnych ###
+            const buttonsContainer = document.createElement("div");
+            buttonsContainer.className = "owl-buttons";
+
+            const prevButton = document.createElement("div");
+            prevButton.className = "owl-prev";
+
+            const nextButton = document.createElement("div");
+            nextButton.className = "owl-next";
+
+            buttonsContainer.appendChild(prevButton);
+            buttonsContainer.appendChild(nextButton);
+            categoryElement.appendChild(buttonsContainer);
+            
+            // ### NOWY KOD: Logika przewijania po kliknięciu ###
+            const productElement = productsContainer.querySelector('.product-box');
+            if (productElement) {
+              // Obliczamy dystans przewijania na podstawie szerokości jednego produktu plus margines
+              const scrollAmount = productElement.offsetWidth + 20; 
+
+              nextButton.addEventListener('click', function() {
+                productsContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+              });
+
+              prevButton.addEventListener('click', function() {
+                productsContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+              });
+            }
+            // Koniec nowego kodu
+
+            container.appendChild(categoryElement);
           }
-          categoryElement.appendChild(productsContainer);
-          container.appendChild(categoryElement);
-        });
-      } else {
-        console.log("Brak kategorii w danych.");
-      }
-      document.getElementById("content").appendChild(container);
+        }
+      });
+    } else {
+      console.log("Brak kategorii w danych.");
     }
+    document.getElementById("content").appendChild(container);
+  }
     function createProductElement(product) {
       const productElement = document.createElement("div");
       productElement.className = "product-box";

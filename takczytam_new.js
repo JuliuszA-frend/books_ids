@@ -17,29 +17,6 @@
       }
   });
 
-
-  if (window.innerWidth <= 990) {
-    var rowElement = document.querySelector(
-      ".category-description > *:not(.row-vertical-block):not(:first-child)"
-    );
-    if (rowElement) {  // Sprawdzamy, czy rowElement jest znaleziony
-        var containerElement = document.querySelector("#container");
-        var footerElement = document.querySelector("#footer");
-
-        rowElement.style.border = "1px solid #e1e1e1";
-        rowElement.style.padding = "20px 20px 20px 20px";
-        rowElement.style.textAlign = "left";
-        rowElement.style.margin = "2rem auto";
-        rowElement.style.width = "97.5%";
-
-        // Sprawdzamy, czy containerElement i footerElement istnieją
-        if (containerElement && footerElement) {
-            containerElement.parentNode.insertBefore(rowElement, footerElement);
-        }
-    }
-}
-
-
   function addCartIcon(className) {
     var aTags = document.querySelectorAll("a." + className);
     aTags.forEach(function (aTag) {

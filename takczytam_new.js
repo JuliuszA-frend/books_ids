@@ -1318,13 +1318,13 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
 
   transformElement(149, "https://takczytam.com/c/52/nowosci.html");
   transformElement(117, "https://takczytam.com/c/491/dla-dzieci-i-mlodziezy.html");
-  transformElement(191, "https://takczytam.com/c/343/edukacyjne-dziecieca-i-mlodziezowa.html");
-  transformElement(192, "https://takczytam.com/c/272/fantastyka-sci-fi-i-fantasy.html");
-  transformElement(193, "https://takczytam.com/ksiazki-o-emocjach-dla-dzieci-kompetencje-emocjonalne");
-  transformElement(194, "https://takczytam.com/359-audiobooki");
-  transformElement(142, "https://takczytam.com/c/486/kompetencje-jezykowe-logiczne-i-motoryczne-ksiazki-dla-dzieci-gabinety-terapeutyczne-psychologiczne-i-pedagogiczne-oferta-dla-szkol-przedszkoli-i-placowek-psychologiczno-pedagogicznych-instytucje.html");
-  transformElement(143, "https://takczytam.com/c/472/przyjazn-milosc-zwiazki-seks-ksiazki-psychologiczne-ksiazka-niebeletrystyczna.html");
-  transformElement(94, "https://takczytam.com/true-crime");
+  transformElement(191, "https://takczytam.com/c/273/kryminal.html");
+  transformElement(192, "https://takczytam.com/c/344/czytanie-i-pisanie-edukacyjne-dziecieca-i-mlodziezowa.html");
+  transformElement(193, "https://takczytam.com/c/408/fanek-bridget-jones-.html");
+  transformElement(194, "https://takczytam.com/c/339/powiesci-dla-dzieci-dla-dzieci-dziecieca-i-mlodziezowa.html");
+  transformElement(142, "https://takczytam.com/c/277/ksiazki-mlodziezowe-i-young-adult.html");
+  transformElement(143, "https://takczytam.com/c/175/milosnikow-sztuki.html");
+  transformElement(94, "https://takczytam.com/c/450/rebusy-labirynty-lamiglowki-dla-dzieci-dziecieca-i-mlodziezowa.html");
   transformElement(139, "https://takczytam.com/c/336/bajki-i-opowiadania-dla-dzieci-dziecieca-i-mlodziezowa.html");
 
 

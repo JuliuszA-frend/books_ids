@@ -1318,13 +1318,12 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
 
   transformElement(149, "https://takczytam.com/c/52/nowosci.html");
   transformElement(117, "https://takczytam.com/c/491/dla-dzieci-i-mlodziezy.html");
-  transformElement(191, "https://takczytam.com/c/273/kryminal.html");
-  transformElement(192, "https://takczytam.com/c/344/czytanie-i-pisanie-edukacyjne-dziecieca-i-mlodziezowa.html");
-  transformElement(193, "https://takczytam.com/c/408/fanek-bridget-jones-.html");
-  transformElement(194, "https://takczytam.com/c/339/powiesci-dla-dzieci-dla-dzieci-dziecieca-i-mlodziezowa.html");
-  transformElement(142, "https://takczytam.com/c/277/ksiazki-mlodziezowe-i-young-adult.html");
-  transformElement(143, "https://takczytam.com/c/175/milosnikow-sztuki.html");
-  transformElement(94, "https://takczytam.com/c/450/rebusy-labirynty-lamiglowki-dla-dzieci-dziecieca-i-mlodziezowa.html");
+  transformElement(191, "https://takczytam.com/c/318/zdrowie-i-uroda-ksiazka-niebeletrystyczna.html");
+  transformElement(192, "https://takczytam.com/c/546/kartonowe-ksiazeczki-dla-malych-dzieci-wiek-1-3-dla-dzieci-dziecieca-i-mlodziezowa.html");
+  transformElement(193, "https://takczytam.com/c/270/klasyka-i-lektury-literatura-piekna-beletrystyka.html");
+  transformElement(194, "https://takczytam.com/c/291/malarstwo-kultura-i-sztuka-ksiazka-niebeletrystyczna.html");
+  transformElement(142, "https://takczytam.com/ksiazki-o-dinozaurach");
+  transformElement(94, "https://takczytam.com/c/338/kolorowanki-i-wycinanki-dla-dzieci-dziecieca-i-mlodziezowa.html");
   transformElement(139, "https://takczytam.com/c/336/bajki-i-opowiadania-dla-dzieci-dziecieca-i-mlodziezowa.html");
 
 

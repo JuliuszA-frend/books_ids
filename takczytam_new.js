@@ -622,7 +622,7 @@ informDivs.forEach(function (informDiv) {
   }
 
 
-  var cenaElement1 = document.querySelector('[itemprop="price"]');
+/*  var cenaElement1 = document.querySelector('[itemprop="price"]');
 var cenaElement2 = document.querySelector(".pinfo-price__omnibus strong");
 
 if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
@@ -633,7 +633,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
       cenaElement2.innerText = formattedCena;
     }
   }
-}
+} */
 
 
   

@@ -671,37 +671,64 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
 
 
   
-  window.onload = function () {
+window.onload = function () {
     var stockInfoElementNot = document.querySelector(
       ".view_stock_info_text_not"
     );
     var stockInfoElementOk = document.querySelector(".view_stock_info_text_ok");
+
     if (stockInfoElementNot || stockInfoElementOk) {
       var technicalRowOrder = document.querySelector(
         "ul.technical-row:nth-child(1)"
       );
+
+      // --- POCZĄTEK NOWEGO ZABEZPIECZENIA ---
+      var isRealStockTable = false;
       if (technicalRowOrder) {
+        var textContent = technicalRowOrder.textContent || technicalRowOrder.innerText;
+        // Sprawdzamy, czy w tabeli są nagłówki charakterystyczne dla specyfikacji książki
+        if (
+          textContent.includes("Autor:") ||
+          textContent.includes("Wydawnictwo:") ||
+          textContent.includes("Ilość stron:")
+        ) {
+          isRealStockTable = false;
+          console.log("Zatrzymano skrypt dostępności: wykryto tabelę szczegółów technicznych zamiast tabeli stanów.");
+        } else {
+          isRealStockTable = true;
+        }
+      }
+      // --- KONIEC NOWEGO ZABEZPIECZENIA ---
+
+      // Uruchamiamy logikę TYLKO wtedy, gdy mamy pewność, że to tabela ze stanami z księgarń
+      if (technicalRowOrder && isRealStockTable) {
         var quantityElements = technicalRowOrder.querySelectorAll(
           "li.technical-data p.technical-desc"
         );
         var available = !1;
+
+        // Tutaj skrypt będzie teraz bezpiecznie zliczał tylko stany z księgarń
         quantityElements.forEach(function (element) {
           var quantity = parseInt(element.textContent, 10);
           if (quantity > 0) {
             available = !0;
           }
         });
+
         var priceContainerMobile = document.querySelector(
           "div.row.hidden-md.hidden-lg.visible-xs.visible-sm div.pinfo-top.col-xs-24 div.pinfo-price.price_produsts_info div.view_price_global"
         );
         var priceContainerDesktop = document.querySelector(
           "div.pinfo-top-copy.hidden-sm.hidden-xs.visible-md.visible-lg div.pinfo-price.price_produsts_info div.view_price_global"
         );
+
         if (!priceContainerMobile && !priceContainerDesktop) {
           console.warn(
             "Nie znaleziono odpowiedniego kontenera .view_price_global"
           );
         } else {
+            
+          // --- FUNKCJA OSTATNIE EGZEMPLARZE ---
           function addOrderButton(container, isMobile) {
             if (!stockInfoElementNot) return;
             var buttonOrder = document.createElement("a");
@@ -747,7 +774,6 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
                 modal.classList.add("modal");
                 var clonedTechnicalRowOrder = technicalRowOrder.cloneNode(true);
         
-                // Zamiast ukrywania przycisków, zastępujemy je nowymi
                 var linksToReplace = clonedTechnicalRowOrder.querySelectorAll(
                     "ul:nth-child(1) > li > p > a"
                 );
@@ -800,7 +826,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
                 overlay.style.display = "block";
             });
             container.appendChild(buttonOrder);
-        }
+          }
         
           function createBadge(isMobile) {
             var badge = document.createElement("span");
@@ -824,6 +850,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
             }
             return badge;
           }
+          
           if (available) {
             if (priceContainerMobile) {
               addOrderButton(priceContainerMobile, !0);
@@ -840,18 +867,13 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
             }
           }
         }
-      }
-      if (stockInfoElementNot || stockInfoElementOk) {
-        var priceContainerMobile = document.querySelector(
-          "div.row.hidden-md.hidden-lg.visible-xs.visible-sm div.pinfo-top.col-xs-24 div.pinfo-price.price_produsts_info div.view_price_global"
-        );
-        var priceContainerDesktop = document.querySelector(
-          "div.pinfo-top-copy.hidden-sm.hidden-xs.visible-md.visible-lg div.pinfo-price.price_produsts_info div.view_price_global"
-        );
+
+        // --- FUNKCJA REZERWACJI ---
         var badgeExists = document.querySelector(".badge-danger");
         var additionalButtonsContainer = document.querySelector(
           ".additional-buttons-container"
         );
+        
         function addReservationButton(container, isMobile) {
           if (badgeExists) return;
           var button = document.createElement("a");
@@ -939,6 +961,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
           });
           container.appendChild(button);
         }
+        
         if (!badgeExists) {
           if (
             stockInfoElementOk &&
@@ -956,7 +979,7 @@ if (cenaElement1) { // Sprawdzenie, czy cenaElement1 istnieje
             }
           }
         }
-      }
+      } // Koniec warunku sprawdzającego autentyczność tabeli
     }
   };
 

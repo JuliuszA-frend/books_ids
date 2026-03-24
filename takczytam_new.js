@@ -1141,7 +1141,7 @@ window.onload = function () {
           window.location.href = "https://takczytam.com/formularz-rezerwacji";
         });
       document
-        .querySelectorAll("ul.technical-row:nth-child(1) > li > p > a") // <--- NOWY, POPRAWNY SELEKTOR
+        .querySelectorAll("ul.technical-row:nth-child(1) > li > p > a.button.button-dark.button-small") // <--- NOWY, POPRAWNY SELEKTOR
         .forEach((button) => {
           button.addEventListener("click", addProduct);
         });

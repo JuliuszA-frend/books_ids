@@ -1341,12 +1341,14 @@ window.onload = function () {
 
   transformElement(149, "https://takczytam.com/c/52/nowosci.html");
   transformElement(117, "https://takczytam.com/c/491/dla-dzieci-i-mlodziezy.html");
-  transformElement(191, "https://takczytam.com/468-dzieci-");
-  transformElement(192, "https://takczytam.com/c/325/kulinaria-ksiazka-niebeletrystyczna.html");
-  transformElement(193, "https://takczytam.com/c/370/repetytoria-testy-egzaminy-edukacyjne-dziecieca-i-mlodziezowa.html");
-  transformElement(194, "https://takczytam.com/c/265/beletrystyka.html");
-  transformElement(94, "https://takczytam.com/seria-samochodzik-franek");
-  transformElement(139, "https://takczytam.com/c/308/dom-i-ogrod.html");
+  transformElement(191, "https://takczytam.com/c/333/ksiazeczki-dla-malych-dzieci-wiek-1-3-dla-dzieci-dziecieca-i-mlodziezowa.html");
+  transformElement(192, "https://takczytam.com/c/337/ksiazeczki-z-naklejkami-dla-dzieci-dziecieca-i-mlodziezowa.html");
+  transformElement(193, "https://takczytam.com/c/338/kolorowanki-i-wycinanki-dla-dzieci-dziecieca-i-mlodziezowa.html");
+  transformElement(142, "https://takczytam.com/c/339/powiesci-dla-dzieci-dla-dzieci-dziecieca-i-mlodziezowa.html");
+  transformElement(194, "https://takczytam.com/c/445/zachwyc-sie-ilustracjami-dla-dzieci-dziecieca-i-mlodziezowa.html");
+  transformElement(126, "https://takczytam.com/c/345/cyferki-liczby-matematyka-edukacyjne-dziecieca-i-mlodziezowa.html");
+  transformElement(94, "https://takczytam.com/c/269/obyczajowa.html");
+  transformElement(143, "https://takczytam.com/c/273/kryminal.html");
 
 
   

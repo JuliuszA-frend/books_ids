@@ -1341,12 +1341,13 @@ window.onload = function () {
 
   transformElement(149, "https://takczytam.com/c/52/nowosci.html");
   transformElement(117, "https://takczytam.com/c/491/dla-dzieci-i-mlodziezy.html");
-  transformElement(191, "https://takczytam.com/c/269/obyczajowa.html");
-  transformElement(192, "https://takczytam.com/c/338/kolorowanki-i-wycinanki-dla-dzieci-dziecieca-i-mlodziezowa.html");
-  transformElement(193, "https://takczytam.com/c/408/fanek-bridget-jones-.html");
-  transformElement(142, "https://takczytam.com/c/370/repetytoria-testy-egzaminy-edukacyjne-dziecieca-i-mlodziezowa.html");
-  transformElement(194, "https://takczytam.com/c/318/zdrowie-i-uroda-ksiazka-niebeletrystyczna.html");
-  transformElement(126, "https://takczytam.com/seria-swinka-peppa-peppa-pig");
+  transformElement(191, "https://takczytam.com/c/297/historia-powszechna-historia-ksiazka-niebeletrystyczna.html");
+  transformElement(192, "https://takczytam.com/c/379/lektury.html");
+  transformElement(193, "https://takczytam.com/c/278/historyczna-i-przygodowa.html");
+  transformElement(142, "https://takczytam.com/c/295/historia.html");
+  transformElement(194, "https://takczytam.com/c/450/rebusy-labirynty-lamiglowki-dla-dzieci-dziecieca-i-mlodziezowa.html");
+  transformElement(126, "https://takczytam.com/seria-psi-patrol");
+  transformElement(94, "https://takczytam.com/c/269/obyczajowa.html");
   transformElement(143, "https://takczytam.com/c/273/kryminal.html");
 
 

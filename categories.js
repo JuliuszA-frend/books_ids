@@ -101,7 +101,7 @@ const categoriesData = {
         { category_id: "465", products: [{ products_id: "24994" }, { products_id: "21978" }, { products_id: "16802" }, { products_id: "16168" }, { products_id: "15886" }, { products_id: "15860" }, { products_id: "15693" }, { products_id: "11676" }, { products_id: "10462" }] }, // 465 - MY LITTLE PONY,
         { category_id: "464", products: [{ products_id: "20794" }, { products_id: "17453" }, { products_id: "17341" }, { products_id: "17340" }, { products_id: "17199" }, { products_id: "16943" }, { products_id: "16938" }, { products_id: "16912" }, { products_id: "16425" }, { products_id: "16411" }, { products_id: "16286" }, { products_id: "16276" }, { products_id: "16255" }, { products_id: "16250" }, { products_id: "15851" }, { products_id: "15787" }, { products_id: "15754" }, { products_id: "15737" }, { products_id: "15729" }, { products_id: "15713" }, { products_id: "15709" }, { products_id: "15663" }] }, // 464 - BOHATEROWIE DISNEYA,
         { category_id: "629", products: [{ products_id: "30710" }, { products_id: "30709" }, { products_id: "30708" }, { products_id: "30707" }, { products_id: "30706" }, { products_id: "30705" }, { products_id: "30704" }, { products_id: "30703" }, { products_id: "30701" }, { products_id: "30699" }, { products_id: "30698" }, { products_id: "30696" }, { products_id: "29570" }, { products_id: "29569" }, { products_id: "28906" }, { products_id: "28904" }, { products_id: "28903" }, { products_id: "28902" }, { products_id: "28901" }, { products_id: "28900" }, { products_id: "28899" }, { products_id: "28898" }, { products_id: "28897" }, { products_id: "28309" }, { products_id: "28306" }, { products_id: "28305" }, { products_id: "28304" }, { products_id: "28303" }, { products_id: "28298" }, { products_id: "28297" }, { products_id: "28296" }, { products_id: "27397" }, { products_id: "27015" }, { products_id: "26892" }, { products_id: "26890" }, { products_id: "26888" }, { products_id: "26881" }, { products_id: "26878" }, { products_id: "26668" }, { products_id: "26667" }, { products_id: "24788" }, { products_id: "18372" }, { products_id: "17193" }, { products_id: "16833" }, { products_id: "16832" }, { products_id: "16716" }, { products_id: "16715" }, { products_id: "16226" }, { products_id: "16225" }, { products_id: "15958" }] }, // 629 - ERNEST BŁĘDOWSKI,
-        { category_id: "632", products: [{ products_id: "30683" }, { products_id: "30682" }, { products_id: "29906" }, { products_id: "29853" }, { products_id: "29852" }, { products_id: "29169" }, { products_id: "28879" }, { products_id: "28878" }, { products_id: "28019" }, { products_id: "28018" }, { products_id: "27126" }, { products_id: "27068" }, { products_id: "27067" }, { products_id: "26143" }, { products_id: "26142" }, { products_id: "26141" }, { products_id: "25781" }, { products_id: "25780" }, { products_id: "25779" }, { products_id: "25201" }, { products_id: "25199" }, { products_id: "24845" }, { products_id: "24211" }, { products_id: "24209" }, { products_id: "24208" }, { products_id: "24207" }, { products_id: "24206" }, { products_id: "22801" }, { products_id: "22785" }, { products_id: "22780" }, { products_id: "22772" }, { products_id: "22771" }, { products_id: "22751" }, { products_id: "22747" }, { products_id: "22332" }, { products_id: "21047" }, { products_id: "21045" }, { products_id: "19387" }, { products_id: "18807" }, { products_id: "16700" }, { products_id: "14124" }, { products_id: "14105" }, { products_id: "14093" }] }, // 632 - SAMOCHODZIK FRANEK I HULAJNOGA ZUZIA
+        { category_id: "9285", products: [{ products_id: "31010" }, { products_id: "31009" }, { products_id: "30683" }, { products_id: "30682" }, { products_id: "29853" }, { products_id: "29852" }, { products_id: "29176" }, { products_id: "29169" }, { products_id: "28879" }, { products_id: "28878" }, { products_id: "27126" }, { products_id: "27070" }, { products_id: "27068" }, { products_id: "27067" }, { products_id: "26143" }, { products_id: "26142" }, { products_id: "26141" }, { products_id: "25843" }, { products_id: "25781" }, { products_id: "25779" }, { products_id: "25201" }, { products_id: "25200" }, { products_id: "25199" }, { products_id: "24847" }, { products_id: "24846" }, { products_id: "24845" }, { products_id: "24844" }, { products_id: "24843" }, { products_id: "24211" }, { products_id: "24210" }, { products_id: "24209" }, { products_id: "24208" }, { products_id: "24207" }, { products_id: "24206" }, { products_id: "22821" }, { products_id: "22819" }, { products_id: "22803" }, { products_id: "22802" }, { products_id: "22801" }, { products_id: "22798" }, { products_id: "22788" }, { products_id: "22785" }, { products_id: "22780" }, { products_id: "22772" }, { products_id: "22771" }, { products_id: "22751" }, { products_id: "22748" }, { products_id: "22747" }, { products_id: "22332" }, { products_id: "21886" }] }, // 9285 - SAMOCHODZIK FRANEK I HULAJNOGA ZUZIA
         { category_id: "9222", products: [{ products_id: "30466" }, { products_id: "29695" }, { products_id: "29606" }, { products_id: "29261" }, { products_id: "28241" }, { products_id: "26086" }, { products_id: "26084" }, { products_id: "25085" }, { products_id: "24761" }, { products_id: "23744" }, { products_id: "22809" }, { products_id: "21880" }, { products_id: "17302" }, { products_id: "12162" }, { products_id: "10360" }] } // 9222 - KSIĄŻKI O KOTACH
     ]
 };
@@ -218,7 +218,7 @@ const compatibleCategories = {
     "465": ["465", "491"],
     "464": ["464", "491"],
     "629": ["629"],
-    "632": ["632"],
+    "9285": ["9285"],
     "9222": ["9222"]
 };
 
@@ -252,7 +252,7 @@ const categoryNames = {
     "461": "Książki do nauki języka angielskiego",
     // "454": "Książki do nauki języka niemieckigo",
     // "455": "Książki do nauki języka francuskiego",
-    "456": "Książki do nauki języka włoskiego",
+    // "456": "Książki do nauki języka włoskiego",
     "291": "Albumy i książki o malarstwie",
     "292": "Albumy i książki o architekturze oraz designie",
     "294": "Książki o sztuce",
@@ -334,7 +334,7 @@ const categoryNames = {
     "463": "Niech moc będzie z Tobą młody Padawanie!",
     "465": "Barwny świat kucyków!",
     "464": "Twoi ulubieni bohaterowie!",
-    "632": "Franek i Zuzia",
+    "9285": "Fantastyczne przygody Franka!",
     "629": "Inne książeczki autorstwa Ernesta Błędowskiego",
     "9222": "Książki o mruczkach"
 };

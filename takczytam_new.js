@@ -1687,6 +1687,9 @@ window.onload = function () {
   (function () {
     const PRODUCTS_PER_BOX = 8;
     const CARD_MARGINS = 20; // 10px z lewej + 10px z prawej (patrz CSS)
+    // Boxy z nowościami: zawsze na dole. Resztę kolejności ustalasz
+    // w compatibleCategories (plik categories.js / generator).
+    const NEW_ARRIVALS = ["491", "492", "494"];
 
     document.addEventListener("DOMContentLoaded", function () {
       // Sklep trzyma ID oglądanej książki w elemencie #rc_pid
@@ -1731,7 +1734,19 @@ window.onload = function () {
             });
           });
 
-          getCompatibleCategories(categoryIds).forEach(loadCategory);
+          // map: dla każdej kategorii od razu wysyłamy zapytanie i dostajemy
+          // "obietnicę" (ang. Promise) odpowiedzi
+          const requests = getCompatibleCategories(categoryIds).map(loadCategory);
+
+          // Promise.all czeka na wszystkie odpowiedzi i układa je w kolejności
+          // ZAPYTAŃ, a nie w kolejności, w jakiej przyszły z serwera
+          return Promise.all(requests).then((responses) => {
+            // flatMap skleja kategorie ze wszystkich odpowiedzi w jedną listę
+            const categories = responses.flatMap(
+              (data) => (data && data.categories) || []
+            );
+            showCategories({ categories });
+          });
         })
         .catch((error) => console.error("Rekomendacje: błąd produktu", error));
 
@@ -1743,7 +1758,12 @@ window.onload = function () {
             result.add(compatibleId);
           });
         });
-        return Array.from(result);
+        // filter nie zmienia kolejności, tylko wybiera elementy. Najpierw
+        // bierzemy zwykłe kategorie, a na koniec doklejamy nowości
+        const all = Array.from(result);
+        const regular = all.filter((id) => !NEW_ARRIVALS.includes(id));
+        const newArrivals = all.filter((id) => NEW_ARRIVALS.includes(id));
+        return [...regular, ...newArrivals];
       }
 
       // Krok C: pobierz aktualne dane książek z jednej kategorii
@@ -1752,16 +1772,17 @@ window.onload = function () {
           (cat) => cat.category_id === categoryId
         );
         if (!category || !category.products || category.products.length === 0) {
-          return;
+          return null; // brak listy produktów -> nie ma czego pobierać
         }
 
-        postJson("/ajax.php?p=conversion&f=categories_info&ssl=1", {
+        // "return" oddaje obietnicę, na którą czeka Promise.all
+        return postJson("/ajax.php?p=conversion&f=categories_info&ssl=1", {
           categories: [{ category_id: categoryId, products: category.products }],
-        })
-          .then(showCategories)
-          .catch((error) =>
-            console.error(`Rekomendacje: błąd kategorii ${categoryId}`, error)
-          );
+        }).catch((error) => {
+          // Błąd jednej kategorii nie może zablokować pozostałych boxów
+          console.error(`Rekomendacje: błąd kategorii ${categoryId}`, error);
+          return null;
+        });
       }
 
       // ---------- 2. Budowanie boxów ----------

@@ -1671,327 +1671,280 @@ window.onload = function () {
   });
   console.log("Skrypt zakończył działanie.");
 
+  /*
+  * REKOMENDACJE KSIĄŻEK NA KARCIE PRODUKTU - TakCzytam.com
+  *
+  * Potrzebuje:
+  *   1. categories.js  -> categoriesData, compatibleCategories, categoryNames
+  *   2. funkcji sklepu -> Request, rc_windows, items_cart, def (daje je RedCart)
+  *   3. rekomendacje.css
+  *
+  * Wszystkie klasy zaczynają się od "tc-reco", żeby nie mieszać się z klasami sklepu.
+  */
 
-  
-  document.addEventListener("DOMContentLoaded", function (event) {
-    const productElement = document.getElementById("rc_pid");
-    let productId;  // Deklaracja zmiennej przed blokiem if
+  // Całość jest w "(function () { ... })();" (ang. IIFE), czyli w funkcji, która
+  // uruchamia się od razu. Nazwy z tego pliku nie gryzą się z innymi skryptami.
+  (function () {
+    const PRODUCTS_PER_BOX = 8;
+    const CARD_MARGINS = 20; // 10px z lewej + 10px z prawej (patrz CSS)
 
-    if (productElement) {
-        console.log("Element znaleziony:", productElement);
-        productId = productElement.getAttribute("data-id");
-        console.log("Product ID:", productId);
-    } else {
-        console.error("Element o id 'rc_pid' nie został znaleziony.");
-    }
-    
-    const requestBody = JSON.stringify({
-      products: [{ products_id: productId }],
-    });
-    window.fetch &&
-      fetch("/ajax.php?p=conversion&f=products_info&ssl=1", {
-        method: "POST",
-        body: requestBody,
-        credentials: "same-origin",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          console.log("Odpowiedź z serwera:", response);
-          const categoryIds = [];
-          if (
-            response.products &&
-            Array.isArray(response.products) &&
-            response.products.length > 0
-          ) {
-            const productData = response.products[0];
-            if (
-              productData.categoriesPaths &&
-              Array.isArray(productData.categoriesPaths)
-            ) {
-              productData.categoriesPaths.forEach((pathArray) => {
-                pathArray.forEach((category) => {
-                  if (category.id) {
-                    categoryIds.push(category.id);
-                    console.log(`Znaleziono id kategorii: ${category.id}`);
-                  }
-                });
-              });
-            }
-          } else {
-            console.log("Brak produktów w odpowiedzi.");
-          }
-          console.log("Id kategorie:", categoryIds);
-          const compatibleCategoryIds = getCompatibleCategories(categoryIds);
-          console.log("Kompatybilne kategorie:", compatibleCategoryIds);
-          fetchCompatibleCategories(compatibleCategoryIds);
-        })
-        .catch((error) => {
-          console.error(
-            "Błąd podczas pobierania informacji o produkcie:",
-            error
-          );
-        });
-    function getCompatibleCategories(categoryIds) {
-      const uniqueCompatibleCategoryIds = new Set();
-      categoryIds.forEach((categoryId) => {
-        const compatibleIds = compatibleCategories[categoryId];
-        if (compatibleIds) {
-          compatibleIds.forEach((id) => uniqueCompatibleCategoryIds.add(id));
-        }
-      });
-      return Array.from(uniqueCompatibleCategoryIds);
-    }
-    function fetchCompatibleCategories(compatibleCategoryIds) {
-      console.log(
-        `Rozpoczynam pobieranie produktów dla unikalnych kompatybilnych kategorii: ${compatibleCategoryIds}`
-      );
-      compatibleCategoryIds.forEach((categoryId) => {
-        fetchCategoryAndProducts(categoryId);
-      });
-    }
-    function fetchCategoryAndProducts(categoryId) {
-      console.log(`Pobieranie produktów dla kategorii: ${categoryId}`);
-      const category = categoriesData.categories.find(
-        (cat) => cat.category_id === categoryId
-      );
-      if (category) {
-        console.log(`Znaleziono kategorię: ${categoryId}`, category);
-        if (category.products && category.products.length > 0) {
-          console.log(
-            `Liczba produktów w kategorii ${categoryId}: ${category.products.length}`
-          );
-          fetch("/ajax.php?p=conversion&f=categories_info&ssl=1", {
-            method: "POST",
-            body: JSON.stringify({
-              categories: [
-                { category_id: categoryId, products: category.products },
-              ],
-            }),
-            credentials: "same-origin",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => {
-              console.log(
-                `Odpowiedź serwera dla kategorii ${categoryId}:`,
-                response
-              );
-              return response.json();
-            })
-            .then((data) => {
-              console.log(`Dane kategorii ${categoryId}:`, data);
-              displayCategoriesAndProducts(data);
-            })
-            .catch((error) => {
-              console.error(
-                `Błąd podczas pobierania danych dla kategorii ${categoryId}:`,
-                error
-              );
-            });
-        } else {
-          console.log(`Brak produktów dla kategorii ${categoryId}.`);
-        }
-      } else {
-        console.log(`Nie znaleziono kategorii o ID: ${categoryId}`);
+    document.addEventListener("DOMContentLoaded", function () {
+      // Sklep trzyma ID oglądanej książki w elemencie #rc_pid
+      const pidElement = document.getElementById("rc_pid");
+
+      // POPRAWKA: to nie jest karta książki -> kończymy i nie wysyłamy zapytań
+      if (!pidElement) return;
+
+      const currentProductId = pidElement.getAttribute("data-id");
+
+      // Tu zapisujemy ID książek, które już pokazaliśmy (Set nie trzyma duplikatów)
+      const shownProducts = new Set();
+
+      // ---------- 1. Pobieranie danych ----------
+
+      // Wspólna funkcja dla obu zapytań (wcześniej ten kod był powtórzony)
+      function postJson(url, data) {
+        return fetch(url, {
+          method: "POST",
+          body: JSON.stringify(data),
+          credentials: "same-origin",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }).then((response) => response.json());
       }
-    }
-    let allDisplayedProducts = new Set();
-    function displayCategoriesAndProducts(data) {
-    const container = document.createElement("div");
-    container.className = "carousel-container";
 
-    if (data.categories && data.categories.length > 0) {
-      data.categories.forEach((category) => {
-        if (category.products && category.products.length > 0) {
-          const availableProducts = category.products.filter(
-            (product) => product.quantity > 0
-          );
-          const randomProducts = getRandomProducts(availableProducts, 8);
+      // Krok A: w jakich kategoriach jest oglądana książka?
+      postJson("/ajax.php?p=conversion&f=products_info&ssl=1", {
+        products: [{ products_id: currentProductId }],
+      })
+        .then((response) => {
+          const product = response.products && response.products[0];
+          if (!product || !Array.isArray(product.categoriesPaths)) return;
 
-          // Tworzymy elementy dla kategorii tylko wtedy, gdy są w niej dostępne produkty do wyświetlenia
-          if (randomProducts.length > 0) {
-            const categoryElement = document.createElement("div");
-            categoryElement.className = "category";
-            // ZMIANA: Dodajemy pozycjonowanie, aby strzałki wyświetlały się poprawnie
-            categoryElement.style.position = "relative";
-
-            const categoryName = document.createElement("h2");
-            const customCategoryName = categoryNames[category.category_id];
-            if (customCategoryName) {
-              categoryName.textContent = customCategoryName;
-            } else {
-              categoryName.textContent = `${category.name_pl} - Może zainteresuje Cię jeszcze coś z tej kategorii`;
-            }
-            categoryElement.appendChild(categoryName);
-
-            const productsContainer = document.createElement("div");
-            productsContainer.className = "products-carousel";
-
-            randomProducts.forEach((product) => {
-              if (
-                product.products_id !== productId &&
-                !allDisplayedProducts.has(product.products_id)
-              ) {
-                const productElement = createProductElement(product);
-                productsContainer.appendChild(productElement);
-                allDisplayedProducts.add(product.products_id);
-              }
+          // categoriesPaths to lista ścieżek, a każda ścieżka to lista kategorii
+          const categoryIds = [];
+          product.categoriesPaths.forEach((path) => {
+            path.forEach((category) => {
+              if (category.id) categoryIds.push(category.id);
             });
-            categoryElement.appendChild(productsContainer);
+          });
 
-            // ### NOWY KOD: Dodawanie przycisków nawigacyjnych ###
-            const buttonsContainer = document.createElement("div");
-            buttonsContainer.className = "owl-buttons";
+          getCompatibleCategories(categoryIds).forEach(loadCategory);
+        })
+        .catch((error) => console.error("Rekomendacje: błąd produktu", error));
 
-            const prevButton = document.createElement("div");
-            prevButton.className = "owl-prev";
+      // Krok B: jakie kategorie pasują do tych kategorii? (z categories.js)
+      function getCompatibleCategories(categoryIds) {
+        const result = new Set();
+        categoryIds.forEach((id) => {
+          (compatibleCategories[id] || []).forEach((compatibleId) => {
+            result.add(compatibleId);
+          });
+        });
+        return Array.from(result);
+      }
 
-            const nextButton = document.createElement("div");
-            nextButton.className = "owl-next";
-
-            buttonsContainer.appendChild(prevButton);
-            buttonsContainer.appendChild(nextButton);
-            categoryElement.appendChild(buttonsContainer);
-            
-            // ### NOWY KOD: Logika przewijania po kliknięciu ###
-            const productElement = productsContainer.querySelector('.product-box');
-            if (productElement) {
-              // Obliczamy dystans przewijania na podstawie szerokości jednego produktu plus margines
-              const scrollAmount = productElement.offsetWidth + 20; 
-
-              nextButton.addEventListener('click', function() {
-                productsContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-              });
-
-              prevButton.addEventListener('click', function() {
-                productsContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-              });
-            }
-            // Koniec nowego kodu
-
-            container.appendChild(categoryElement);
-          }
+      // Krok C: pobierz aktualne dane książek z jednej kategorii
+      function loadCategory(categoryId) {
+        const category = categoriesData.categories.find(
+          (cat) => cat.category_id === categoryId
+        );
+        if (!category || !category.products || category.products.length === 0) {
+          return;
         }
-      });
-    } else {
-      console.log("Brak kategorii w danych.");
-    }
-    document.getElementById("content").appendChild(container);
-  }
-    function createProductElement(product) {
-      const productElement = document.createElement("div");
-      productElement.className = "product-box";
-      const productLink = document.createElement("a");
-      productLink.href = product.url;
-      const productImage = document.createElement("img");
-      productImage.src = product.main_image;
-      productImage.alt = product.name_pl;
-      productImage.className = "product-image";
-      productLink.appendChild(productImage);
-      productElement.appendChild(productLink);
-      const productContent = document.createElement("div");
-      productContent.className = "custom-product-box-content";
-      const productNameLink = document.createElement("a");
-      productNameLink.href = product.url;
-      const productName = document.createElement("h3");
-      productName.textContent = product.name_pl;
-      productNameLink.appendChild(productName);
-      productContent.appendChild(productNameLink);
-      const productPrice = document.createElement("p");
-      productPrice.textContent = `Cena: ${product.promotions_price_brutto} PLN`;
-      productPrice.className = `custom-container-price`;
-      productContent.appendChild(productPrice);
-      const marketPrice = document.createElement("p");
-      const marketPriceText = document.createElement("span");
-      marketPriceText.textContent = `${product.gross_price} PLN`;
-      marketPriceText.style.textDecoration = "line-through";
-      marketPrice.textContent = "Cena rynkowa: ";
-      marketPrice.appendChild(marketPriceText);
-      productContent.appendChild(marketPrice);
-      const addToCartButton = createAddToCartButton(product);
-      productContent.appendChild(addToCartButton);
-      productElement.appendChild(productContent);
-      return productElement;
-    }
-    function createAddToCartButton(product) {
-      const addToCartButton = document.createElement("a");
-      addToCartButton.id = "custom-add-to-cart";
-      addToCartButton.setAttribute("data-product-id", product.products_id);
-      addToCartButton.setAttribute("data-item-count", "1");
-      addToCartButton.className = "add-to-cart-button";
-      const buttonText = document.createElement("span");
-      buttonText.textContent = "Dodaj do koszyka";
-      addToCartButton.appendChild(buttonText);
-      const cartIcon = document.createElement("span");
-      cartIcon.className = "mdi mdi-shopping";
-      cartIcon.style.marginLeft = "10px";
-      addToCartButton.appendChild(cartIcon);
-      addToCartButton.addEventListener("click", function () {
-        const pid = this.getAttribute("data-product-id");
-        const ct = this.getAttribute("data-item-count");
-        const item = ct > 0 ? ct : 1;
-        const pict = "fb";
-        console.log(`Dodawanie produktu ${pid} do koszyka. Ilość: ${item}`);
+
+        postJson("/ajax.php?p=conversion&f=categories_info&ssl=1", {
+          categories: [{ category_id: categoryId, products: category.products }],
+        })
+          .then(showCategories)
+          .catch((error) =>
+            console.error(`Rekomendacje: błąd kategorii ${categoryId}`, error)
+          );
+      }
+
+      // ---------- 2. Budowanie boxów ----------
+
+      // Mały pomocnik: tworzy element, nadaje mu klasę i (opcjonalnie) tekst
+      function createElement(tag, className, text) {
+        const element = document.createElement(tag);
+        if (className) element.className = className;
+        if (text !== undefined) element.textContent = text;
+        return element;
+      }
+
+      function showCategories(data) {
+        const container = createElement("div", "tc-reco");
+
+        (data.categories || []).forEach((category) => {
+          // POPRAWKA: najpierw odrzucamy niedostępne, oglądaną i już pokazane
+          // książki, a dopiero potem losujemy. String() pozwala porównać
+          // liczbę 123 z tekstem "123".
+          const available = (category.products || []).filter(
+            (product) =>
+              product.quantity > 0 &&
+              String(product.products_id) !== String(currentProductId) &&
+              !shownProducts.has(String(product.products_id))
+          );
+          if (available.length === 0) return;
+
+          const products = getRandomProducts(available, PRODUCTS_PER_BOX);
+          products.forEach((p) => shownProducts.add(String(p.products_id)));
+
+          container.appendChild(createSection(category, products));
+        });
+
+        // Pustego kontenera nie dodajemy (robiłby tylko odstęp na stronie)
+        if (container.children.length > 0) {
+          document.getElementById("content").appendChild(container);
+        }
+      }
+
+      function createSection(category, products) {
+        const section = createElement("div", "tc-reco__section");
+
+        const title =
+          categoryNames[category.category_id] ||
+          `${category.name_pl} - Może zainteresuje Cię jeszcze coś z tej kategorii`;
+        section.appendChild(createElement("h2", "tc-reco__heading", title));
+
+        const track = createElement("div", "tc-reco__track");
+        products.forEach((product) => track.appendChild(createCard(product)));
+        section.appendChild(track);
+
+        section.appendChild(createArrow(track, -1, "prev", "Poprzednie książki"));
+        section.appendChild(createArrow(track, 1, "next", "Następne książki"));
+
+        return section;
+      }
+
+      function createArrow(track, direction, name, label) {
+        const arrow = createElement(
+          "button",
+          `tc-reco__arrow tc-reco__arrow--${name}`
+        );
+        arrow.type = "button";
+        arrow.setAttribute("aria-label", label); // opis dla czytników ekranu
+
+        arrow.addEventListener("click", () => {
+          // POPRAWKA: szerokość mierzymy w chwili kliknięcia, gdy karta
+          // jest już na stronie (wcześniej wychodziło 0)
+          const card = track.querySelector(".tc-reco__card");
+          const step = card.offsetWidth + CARD_MARGINS;
+          track.scrollBy({ left: direction * step, behavior: "smooth" });
+        });
+
+        return arrow;
+      }
+
+      function createCard(product) {
+        const card = createElement("div", "tc-reco__card");
+
+        const imageLink = createElement("a");
+        imageLink.href = product.url;
+        const image = createElement("img", "tc-reco__image");
+        image.loading = "lazy"; // obrazek pobiera się dopiero, gdy jest potrzebny
+        image.src = product.main_image;
+        image.alt = product.name_pl;
+        imageLink.appendChild(image);
+        card.appendChild(imageLink);
+
+        const body = createElement("div", "tc-reco__body");
+
+        const nameLink = createElement("a");
+        nameLink.href = product.url;
+        nameLink.appendChild(
+          createElement("h3", "tc-reco__name", product.name_pl)
+        );
+        body.appendChild(nameLink);
+
+        body.appendChild(
+          createElement(
+            "p",
+            "tc-reco__price",
+            `Cena: ${product.promotions_price_brutto} PLN`
+          )
+        );
+
+        const marketPrice = createElement("p", "tc-reco__market", "Cena rynkowa: ");
+        marketPrice.appendChild(
+          createElement("span", "tc-reco__old-price", `${product.gross_price} PLN`)
+        );
+        body.appendChild(marketPrice);
+
+        body.appendChild(createCartButton(product.products_id));
+        card.appendChild(body);
+
+        return card;
+      }
+
+      // ---------- 3. Koszyk (ta sama logika co wcześniej) ----------
+
+      function createCartButton(productId) {
+        const button = createElement("button", "tc-reco__button");
+        button.type = "button";
+        button.appendChild(createElement("span", "", "Dodaj do koszyka"));
+        // "mdi mdi-shopping" to ikonka z biblioteki, którą sklep już ma
+        button.appendChild(
+          createElement("span", "mdi mdi-shopping tc-reco__icon")
+        );
+        button.addEventListener("click", () => addToCart(productId, 1));
+        return button;
+      }
+
+      function addToCart(pid, count) {
         new Request({
           method: "post",
           url: "/ajax/pinfo/addcart/",
           data: {
-            pid: pid,
-            item: item,
-            pict: pict,
+            pid: String(pid),
+            item: String(count),
+            pict: "fb",
             checkOptions: 1,
             type: 0,
-            ct: ct,
+            ct: String(count),
           },
           onComplete: function (data) {
             if (!data) {
-              console.log(
-                `Nie znaleziono danych dla produktu ${pid}. Przekierowanie.`
-              );
               window.location.href = "/p/0/" + pid + "/.html";
+              return;
+            }
+
+            // Sklep odpowiada tekstem w stylu "kod~zawartość"
+            const parts = data.split("~");
+
+            if (parts[0] === "1" || parts[0] === "2") {
+              // Produkt ma opcje do wybrania -> okienko sklepu
+              new rc_windows({
+                id: "rc_window_opt",
+                container: document.body,
+                useOverlay: true,
+                width: 665,
+                height: 300,
+                title: def.index.window_opt_title,
+                contentHTML: parts[1],
+              });
+              document.getElementById("rc_window_opt_body").innerHTML = parts[1];
             } else {
-              const d = data.split("~");
-              console.log(`Odpowiedź z serwera po dodaniu do koszyka: ${data}`);
-              switch (d[0]) {
-                case "1":
-                case "2":
-                  const rc_w = new rc_windows({
-                    id: "rc_window_opt",
-                    container: document.body,
-                    useOverlay: !0,
-                    width: 665,
-                    height: 300,
-                    title: def.index.window_opt_title,
-                    contentHTML: d[1],
-                  });
-                  document.getElementById("rc_window_opt_body").innerHTML =
-                    d[1];
-                  break;
-                default:
-                  items_cart("products_quantity" + ct + "_" + pid, 0, ct, pict);
-                  break;
-              }
+              // Dodano -> sklep odświeża koszyk
+              items_cart("products_quantity" + count + "_" + pid, 0, String(count), "fb");
             }
           },
         }).send();
-      });
-      return addToCartButton;
-    }
-    function getRandomProducts(products, count) {
-      const shuffled = products.slice();
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
       }
-      return shuffled.slice(0, count);
-    }
-  });
+
+      // Losowe tasowanie (algorytm Fishera-Yatesa) i wybór kilku pierwszych
+      function getRandomProducts(products, count) {
+        const shuffled = products.slice();
+        for (let i = shuffled.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, count);
+      }
+    });
+  })();
 
   
   if (window.location.href === "https://takczytam.com/_cart/index/") {
